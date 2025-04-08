@@ -1,0 +1,196 @@
+*{
+    font-family: "Lato", sans-serif;
+}
+body {
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
+    margin: 0;
+    color: #999;
+    background: url(../images/form-wizard-bg.jpg) no-repeat center center;
+    height: 100vh;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+form {
+    display: block;
+    margin-top: 0em;
+    unicode-bidi: isolate;
+}
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+.wrapper {
+    width: 826px;
+    height: 620px;
+    padding: 63px 90px 0;
+    background: #fff;
+}
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.steps ul {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 35px;
+}
+
+ul {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    unicode-bidi: isolate;
+}
+.steps ul li {
+    margin-right: 10.8%;
+    position: relative;
+}
+.steps ul li .step-order {
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #666;
+    margin-top: 14px;
+}
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+    unicode-bidi: isolate;
+}
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.steps .current-info, .steps .number {
+    display: none;
+}
+a:-webkit-any-link {
+    color: grey;
+    cursor: pointer;
+    text-decoration: none;
+}
+p, h1, h2, h3, h4, h5, h6, ul {
+    margin: 0;
+}
+section {
+    display: block;
+    unicode-bidi: isolate;
+}
+.form-row {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.form-holder {
+    position: relative;
+}
+.form-holder i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    font-size: 16px;
+}
+.zmdi {
+    display: inline-block;
+    font: normal normal normal 14px / 1 'Material-Design-Iconic-Font';
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+h4 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+.form-control {
+    height: 42px;
+    border: 1px solid #e6e6e6;
+    width: 100%;
+    background: none;
+    padding: 0 35px 0 19px;
+    color: #999;
+}
+.form-row .form-holder {
+    width: 50%;
+    margin-right: 20px;
+}
+.form-holder {
+    position: relative;
+}
+input[type="text" i] {
+    padding-block: 1px;
+    padding-inline: 2px;
+}
+input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]) {
+    overflow-clip-margin: 0px !important;
+    overflow: clip !important;
+}
+input, textarea, select, button {
+    font-family: "Lato-Regular";
+    font-size: 14px;
+}
+.form-row .form-group {
+    width: 50%;
+    display: flex;
+}
+.actions ul {
+    display: flex
+;
+    justify-content: space-between;
+}
+.actions li:first-child a {
+    width: 97px;
+}
+.actions li a {
+    border: none;
+    display: inline-flex
+;
+    height: 42px;
+    width: 132px;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+    background: #8eb852;
+    text-transform: uppercase;
+    justify-content: center;
+    letter-spacing: 1px;
+    font-size: 15px;
+    border-radius: 3px;
+}
+.steps ul li .step-order {
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #666;
+    margin-top: 14px;
+}
+
+.step-order {
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #666;
+    margin-top: 14px;
+}
