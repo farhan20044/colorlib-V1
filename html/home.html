@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>colorlib-wizard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,53 +45,71 @@
                 <!-- SECTION 1 -->
                 <h4 id="wizard-h-0" tabindex="-1" class="title current"></h4>
                 <section id="wizard-p-0" role="tabpanel" aria-labelledby="wizard-h-0" class="body current" aria-hidden="false" style="display: block;">
-                    <h3>Basic details</h3>
-                    <div class="form-row">
-                        <div class="form-holder">
-                            <i class="zmdi zmdi-account"></i>
-                            <input type="text" class="form-control" placeholder="First Name" id="fname" data-has-listeners="true">
+                    <h3 class="fw-semibold d-flex align-items-center justify-content-center main">Basic details</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-account"></i>
+                                <input type="text" class="form-control" placeholder="First Name" id="fname" data-has-listeners="true" required>
+                                <div class="invalid-feedback">Please enter your first name</div>
+                            </div>
                         </div>
-                        <div class="form-holder">
-                            <i class="zmdi zmdi-account"></i>
-                            <input type="text" class="form-control" placeholder="Last Name" id="lname" data-has-listeners="true">
+                        <div class="col-md-6">
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-account"></i>
+                                <input type="text" class="form-control" placeholder="Last Name" id="lname" data-has-listeners="true" required>
+                                <div class="invalid-feedback">Please enter your last name</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-holder">
-                            <i class="zmdi zmdi-email"></i>
-                            <input type="text" class="form-control" placeholder="Email ID" id="email" data-has-listeners="true">
+                        <div class="col-md-6">
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-email"></i>
+                                <input type="email" class="form-control" placeholder="Email ID" id="email" data-has-listeners="true" required>
+                                <div class="invalid-feedback">Please enter a valid email</div>
+                            </div>
                         </div>
-                        <div class="form-holder">
-                            <i class="zmdi zmdi-account-box-o"></i>
-                            <input type="text" class="form-control" placeholder="Your User ID" id="uid" data-has-listeners="true">
+                        <div class="col-md-6">
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-account-box-o"></i>
+                                <input type="text" class="form-control" placeholder="Your User ID" id="uid" data-has-listeners="true" required>
+                                <div class="invalid-feedback">Please enter a user ID</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-holder">
-                            <i class="zmdi zmdi-map"></i>
-                            <input type="text" class="form-control" placeholder="Country" id="country" data-has-listeners="true">
+                        <div class="col-md-6">
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-map"></i>
+                                <input type="text" class="form-control" placeholder="Country" id="country" data-has-listeners="true" required>
+                                <div class="invalid-feedback">Please enter your country</div>
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-3">
                             <div class="form-holder">
                                 <i class="zmdi zmdi-pin"></i>
-                                <input type="text" class="form-control" placeholder="State" id="state" data-has-listeners="true">
+                                <input type="text" class="form-control" placeholder="State" id="state" data-has-listeners="true" required>
+                                <div class="invalid-feedback">Please enter your state</div>
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-holder">
                                 <i class="zmdi zmdi-pin-drop"></i>
-                                <input type="text" class="form-control" placeholder="City" id="city" data-has-listeners="true">
+                                <input type="text" class="form-control" placeholder="City" id="city" data-has-listeners="true" required>
+                                <div class="invalid-feedback">Please enter your city</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-holder">
-                            <i class="zmdi zmdi-smartphone-android"></i>
-                            <input type="text" class="form-control" placeholder="Phone Number" id="phone" data-has-listeners="true">
+                        <div class="col-md-6">
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-smartphone-android"></i>
+                                <input type="tel" class="form-control" placeholder="Phone Number" id="phone" data-has-listeners="true" required>
+                                <div class="invalid-feedback">Please enter your phone number</div>
+                            </div>
                         </div>
-                        <div class="form-holder password">
-                            <i class="zmdi zmdi-eye"></i>
-                            <input type="password" class="form-control" placeholder="Reference Coder" id="refcode" data-has-listeners="true">
+                        <div class="col-md-6">
+                            <div class="form-holder password">
+                                <i class="zmdi zmdi-eye"></i>
+                                <input type="password" class="form-control" placeholder="Reference Coder" id="refcode" data-has-listeners="true" required>
+                                <div class="invalid-feedback">Please enter a reference code</div>
+                            </div>
                         </div>
-                        
                     </div>
                 </section>
 
@@ -97,28 +117,30 @@
                 <h4 id="wizard-h-1" tabindex="-1" class="title"></h4>
                 <section id="wizard-p-1" role="tabpanel" aria-labelledby="wizard-h-1" class="body" aria-hidden="true" style="display: none;">
                     <h3>Password change</h3>
-                    <div class="form-row">
-                        <div class="form-holder w-100">
-                            <input type="password" class="form-control" placeholder="Current Password" data-has-listeners="true">
-                            <i class="zmdi zmdi-lock-open"></i>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="form-holder w-100">
+                                <input type="password" class="form-control" placeholder="Current Password" data-has-listeners="true">
+                                <i class="zmdi zmdi-lock-open"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-holder w-100">
-                            <input type="password" class="form-control" placeholder="Enter the Current Password" data-has-listeners="true">
-                            <i class="zmdi zmdi-lock-open"></i>
+                        <div class="col-12">
+                            <div class="form-holder w-100">
+                                <input type="password" class="form-control" placeholder="Enter the Current Password" data-has-listeners="true">
+                                <i class="zmdi zmdi-lock-open"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-holder w-100">
-                            <input type="password" class="form-control" placeholder="New Password" data-has-listeners="true">
-                            <i class="zmdi zmdi-lock-open"></i>
+                        <div class="col-12">
+                            <div class="form-holder w-100">
+                                <input type="password" class="form-control" placeholder="New Password" data-has-listeners="true">
+                                <i class="zmdi zmdi-lock-open"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-holder w-100">
-                            <input type="password" class="form-control" placeholder="Confirm New Password" data-has-listeners="true">
-                            <i class="zmdi zmdi-lock-open"></i>
+                        <div class="col-12">
+                            <div class="form-holder w-100">
+                                <input type="password" class="form-control" placeholder="Confirm New Password" data-has-listeners="true">
+                                <i class="zmdi zmdi-lock-open"></i>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -127,83 +149,85 @@
                 <h4 id="wizard-h-2" tabindex="-1" class="title"></h4>
                 <section id="wizard-p-2" role="tabpanel" aria-labelledby="wizard-h-2" class="body" aria-hidden="true" style="display: none;">
                     <h3 style="margin-bottom: 16px">My Cart</h3>
-                    <table cellspacing="0" class="table-cart shop_table shop_table_responsive cart woocommerce-cart-form__contents table" id="shop_table">
-                        <thead>
-                            <tr>
-                                <th>&nbsp;</th>
-                                <th style="text-align: left">Product Detail</th>
-                                <th>Quantity</th>
-                                <th>Total Price</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="product-thumb">
-                                    <a href="#" class="item-thumb">
-                                        <img src="images/item-1.jpg" alt="">
-                                    </a>
-                                </td>
-                                <td class="product-detail" data-title="Product Detail">
-                                    <div>
-                                        <a href="#">Cherry</a>
-                                        <span>$</span>
-                                        <span>35</span>
-                                    </div>
-                                </td>
-                                <td class="product-quantity" data-title="Quantity">
-                                    <div class="quantity">
-                                        <span class="plus">+</span>
-                                        <input type="number" id="quantity_5b4f198d958e1" class="input-text qty text" step="1" min="0" max="" name="cart[5934c1ec0cd31e12bd9084d106bc2e32][qty]" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" data-has-listeners="true">
-                                        <span class="minus">-</span>
-                                    </div>
-                                </td>
-                                <td class="total-price" data-title="Total Price">
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">$</span>
-                                        70
-                                    </span>
-                                </td>
-                                <td class="product-remove">
-                                    <a href="#">
-                                        <i class="zmdi zmdi-close-circle-o"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="product-thumb">
-                                    <a href="#" class="item-thumb">
-                                        <img src="images/item-2.jpg" alt="">
-                                    </a>
-                                </td>
-                                <td class="product-detail" data-title="Product Detail">
-                                    <div>
-                                        <a href="#">Mango</a>
-                                        <span>$</span>
-                                        <span>2035</span>
-                                    </div>
-                                </td>
-                                <td class="product-quantity" data-title="Quantity">
-                                    <div class="quantity">
-                                        <span class="plus">+</span>
-                                        <input type="number" id="quantity_5b4f198d958e1" class="input-text qty text" step="1" min="0" max="" name="cart[5934c1ec0cd31e12bd9084d106bc2e32][qty]" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" data-has-listeners="true">
-                                        <span class="minus">-</span>
-                                    </div>
-                                </td>
-                                <td class="total-price" data-title="Total Price">
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">$</span>
-                                        20
-                                    </span>
-                                </td>
-                                <td class="product-remove">
-                                    <a href="#">
-                                        <i class="zmdi zmdi-close-circle-o"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table cellspacing="0" class="table-cart shop_table shop_table_responsive cart woocommerce-cart-form__contents table" id="shop_table">
+                            <thead>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th style="text-align: left">Product Detail</th>
+                                    <th>Quantity</th>
+                                    <th>Total Price</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="product-thumb">
+                                        <a href="#" class="item-thumb">
+                                            <img src="images/item-1.jpg" alt="" class="img-fluid">
+                                        </a>
+                                    </td>
+                                    <td class="product-detail" data-title="Product Detail">
+                                        <div>
+                                            <a href="#">Cherry</a>
+                                            <span>$</span>
+                                            <span>35</span>
+                                        </div>
+                                    </td>
+                                    <td class="product-quantity" data-title="Quantity">
+                                        <div class="quantity">
+                                            <span class="plus">+</span>
+                                            <input type="number" id="quantity_5b4f198d958e1" class="input-text qty text" step="1" min="0" max="" name="cart[5934c1ec0cd31e12bd9084d106bc2e32][qty]" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" data-has-listeners="true">
+                                            <span class="minus">-</span>
+                                        </div>
+                                    </td>
+                                    <td class="total-price" data-title="Total Price">
+                                        <span class="woocommerce-Price-amount amount">
+                                            <span class="woocommerce-Price-currencySymbol">$</span>
+                                            70
+                                        </span>
+                                    </td>
+                                    <td class="product-remove">
+                                        <a href="#">
+                                            <i class="zmdi zmdi-close-circle-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-thumb">
+                                        <a href="#" class="item-thumb">
+                                            <img src="images/item-2.jpg" alt="" class="img-fluid">
+                                        </a>
+                                    </td>
+                                    <td class="product-detail" data-title="Product Detail">
+                                        <div>
+                                            <a href="#">Mango</a>
+                                            <span>$</span>
+                                            <span>2035</span>
+                                        </div>
+                                    </td>
+                                    <td class="product-quantity" data-title="Quantity">
+                                        <div class="quantity">
+                                            <span class="plus">+</span>
+                                            <input type="number" id="quantity_5b4f198d958e1" class="input-text qty text" step="1" min="0" max="" name="cart[5934c1ec0cd31e12bd9084d106bc2e32][qty]" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" data-has-listeners="true">
+                                            <span class="minus">-</span>
+                                        </div>
+                                    </td>
+                                    <td class="total-price" data-title="Total Price">
+                                        <span class="woocommerce-Price-amount amount">
+                                            <span class="woocommerce-Price-currencySymbol">$</span>
+                                            20
+                                        </span>
+                                    </td>
+                                    <td class="product-remove">
+                                        <a href="#">
+                                            <i class="zmdi zmdi-close-circle-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
 
                 <!-- SECTION 4 -->
@@ -211,52 +235,54 @@
                 <section id="wizard-p-3" role="tabpanel" aria-labelledby="wizard-h-3" class="body" aria-hidden="true" style="display: none;">
                     <h3>Cart Totals</h3>
                     <div class="cart_totals">
-                        <table cellspacing="0" class="shop_table shop_table_responsive">
-                            <tbody>
-                                <tr class="cart-subtotal">
-                                    <th>Subtotal</th>
-                                    <td data-title="Subtotal">
-                                        <span class="woocommerce-Price-amount amount">
-                                            <span class="woocommerce-Price-currencySymbol">$</span>110.00
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="cart-subtotal shipping">
-                                    <th>Shipping:</th>
-                                    <td data-title="Subtotal">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="radio" name="shipping" checked="" data-has-listeners="true"> Free
-                                                Shipping
-                                                <span class="checkmark"></span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="shipping" data-has-listeners="true"> Local pickup:
-                                                <span>$</span><span>0.00</span>
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                        <span>Calculate shipping</span>
-                                    </td>
-                                </tr>
-                                <tr class="cart-subtotal">
-                                    <th>Service <span>(estimated for Vietnam)</span></th>
-                                    <td data-title="Subtotal">
-                                        <span class="woocommerce-Price-amount amount">
-                                            <span class="woocommerce-Price-currencySymbol">$</span>5.60
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="order-total border-0">
-                                    <th>Total</th>
-                                    <td data-title="Total">
-                                        <span class="woocommerce-Price-amount amount">
-                                            <span class="woocommerce-Price-currencySymbol">$</span>64.69
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="shop_table shop_table_responsive">
+                                <tbody>
+                                    <tr class="cart-subtotal">
+                                        <th>Subtotal</th>
+                                        <td data-title="Subtotal">
+                                            <span class="woocommerce-Price-amount amount">
+                                                <span class="woocommerce-Price-currencySymbol">$</span>110.00
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr class="cart-subtotal shipping">
+                                        <th>Shipping:</th>
+                                        <td data-title="Subtotal">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="radio" name="shipping" checked="" data-has-listeners="true"> Free
+                                                    Shipping
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="shipping" data-has-listeners="true"> Local pickup:
+                                                    <span>$</span><span>0.00</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <span>Calculate shipping</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="cart-subtotal">
+                                        <th>Service <span>(estimated for Vietnam)</span></th>
+                                        <td data-title="Subtotal">
+                                            <span class="woocommerce-Price-amount amount">
+                                                <span class="woocommerce-Price-currencySymbol">$</span>5.60
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr class="order-total border-0">
+                                        <th>Total</th>
+                                        <td data-title="Total">
+                                            <span class="woocommerce-Price-amount amount">
+                                                <span class="woocommerce-Price-currencySymbol">$</span>64.69
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -266,7 +292,7 @@
                         <a href="#previous" role="menuitem">Back</a>
                     </li>
                     <li aria-hidden="false" aria-disabled="false">
-                        <a href="#next" role="menuitem" >Continue</a>
+                        <a href="#next" role="menuitem">Continue</a>
                     </li>
                     <li aria-hidden="true" style="display: none">
                         <a href="#finish" role="menuitem">Proceed to checkout</a>
@@ -276,89 +302,10 @@
         </form>
     </div>
 
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="../js/script.js"></script>
     <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
-
-
-<style>html, :root, .aiinhbfoop.light, :host([class=light]) {--aiinhbfoop-main-color: 0, 102, 255;}.aiinhbfoop.dark, :host([class=dark]) {--aiinhbfoop-main-color: 0, 102, 255;}</style><!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
-
-
-<style>html, :root, .aiinhbfoop.light, :host([class=light]) {--aiinhbfoop-main-color: 0, 102, 255;}.aiinhbfoop.dark, :host([class=dark]) {--aiinhbfoop-main-color: 0, 102, 255;}</style></body>
-
+</body>
 </html>
