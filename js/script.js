@@ -1,21 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let currentStep = 0; // Start from the first section
+    let currentStep = 0; 
     const sections = document.querySelectorAll(".content section");
     const steps = document.querySelectorAll(".steps li");
     const nextButton = document.querySelector(".actions a[href='#next']");
     const prevButton = document.querySelector(".actions a[href='#previous']");
 
     function showStep(step) {
-        // Hide all sections
         sections.forEach((section) => (section.style.display = "none"));
-        // Show the selected section
         sections[step].style.display = "block";
 
-        // Update active step
         steps.forEach((stepItem) => stepItem.classList.remove("current"));
         steps[step].classList.add("current");
 
-        // Enable/disable buttons
         prevButton.parentElement.classList.toggle("disabled", step === 0);
         // nextButton.style.display = step === sections.length - 1 ? "none" : "inline-block";
     }
@@ -49,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Event listener for "Back" button
     prevButton.addEventListener("click", function (event) {
         event.preventDefault();
         if (currentStep > 0) {
@@ -64,19 +59,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // validation
 document.addEventListener('DOMContentLoaded', function() {
-    // Get the continue button
     const continueBtn = document.querySelector('a[href="#next"]');
     
-    // Add click event listener
     continueBtn.addEventListener('click', function(e) {
-        // Only validate if we're on section 1
         const currentSection = document.querySelector('.body.current');
         if (currentSection.id === 'wizard-p-0') {
-            // Get all required inputs in section 1
             const inputs = currentSection.querySelectorAll('input[required]');
             let isValid = true;
             
-            // Validate each input
             inputs.forEach(input => {
                 if (!input.value.trim()) {
                     input.classList.add('is-invalid');
@@ -84,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     input.classList.remove('is-invalid');
                     
-                    // Additional validation for email
                     if (input.type === 'email' && !validateEmail(input.value)) {
                         input.classList.add('is-invalid');
                         isValid = false;
@@ -92,10 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            // Prevent moving to next step if validation fails
             if (!isValid) {
                 e.preventDefault();
-                // Scroll to first invalid input
                 const firstInvalid = currentSection.querySelector('.is-invalid');
                 if (firstInvalid) {
                     firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -104,21 +91,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Email validation function
+    // Email validation
     function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     }
     
     // Clear validation when user starts typing
-    // Clear validation when user starts typing
     const inputs = document.querySelectorAll('input[required]');
     inputs.forEach(input => {
         input.addEventListener('input', function() {
             if (this.value.trim()) {
-                // For name fields, check if input is alphabetic
+
                 if (this.id === 'fname' || this.id === 'lname') {
-                    const nameRegex = /^[A-Za-z ]*$/; // Allow empty during typing
+                    const nameRegex = /^[A-Za-z ]*$/; 
                     if (nameRegex.test(this.value)) {
                         this.classList.remove('is-invalid');
                     } else {
@@ -133,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Prevent non-alphabetic input in name fields
+    //non-alphabetic
     const nameFields = document.querySelectorAll('#fname, #lname');
     nameFields.forEach(field => {
         field.addEventListener('keypress', function(e) {
@@ -143,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Also prevent pasting non-alphabetic characters
+        // pasting
         field.addEventListener('paste', function(e) {
             const pasteData = e.clipboardData.getData('text');
             if (!/^[A-Za-z ]+$/.test(pasteData)) {

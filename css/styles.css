@@ -21,8 +21,10 @@ form {
 .main{
     color: black;
     text-transform: uppercase;
-    font-size: 1.3rem;
-    letter-spacing: 4px;
+    font-size: 1.18rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-weight: 900!important;
 }
 div {
     display: block;
@@ -143,9 +145,9 @@ h4 {
 .form-holder {
     position: relative;
 }
-input[type="text" i] {
-    padding-block: 1px;
-    padding-inline: 2px;
+input[type="text"]:focus,input[type="tel"]:focus,input[type="password"]:focus,input[type="email"]:focus{
+    border: 1px solid green;
+    border-radius: 1px;
 }
 input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]) {
     overflow-clip-margin: 0px !important;
@@ -199,4 +201,13 @@ input, textarea, select, button {
     font-size: 12px;
     color: #666;
     margin-top: 14px;
+}
+table.cart tr:last-child td {
+    padding-bottom: 0;
+}
+table.cart tr:last-child td {
+    border: none;
+}
+table.cart .product-detail {
+    width: 22.45%;
 }
