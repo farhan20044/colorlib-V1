@@ -1,0 +1,29 @@
+input:focus {
+  border: 2px solid green;
+  border-color: #4a90e2;
+}
+input:focus {
+  outline: none;
+}
+input.error {
+  border: 1px solid #ff3860;
+}
+input, textarea, select, button {
+    font-family: "Lato-Regular";
+    font-size: 14px;
+}
+input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]) {
+    overflow-clip-margin: 0px !important;
+    overflow: clip !important;
+}
+input::placeholder {
+    font-size: 14px;
+    font-family: "Lato";
+    transform: translateY(1px);
+    color: #999;
+  }
+
+input[type="text"]:focus{
+    border: 1px solid green!important;
+
+}

@@ -1,0 +1,43 @@
+form {
+    display: block;
+    margin-top: 0em;
+    unicode-bidi: isolate;
+}
+.form-row {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.form-holder i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    font-size: 16px;
+}
+
+.form-control {
+    height: 42px;
+    border: 1px solid #e6e6e6;
+    width: 100%;
+    background: none;
+    padding: 0 35px 0 19px;
+    color: #999;
+}
+.form-row .form-holder {
+    width: 50%;
+    margin-right: 20px;
+}
+.form-row .form-holder:last-child {
+    margin-right: 0;
+}
+
+
+.form-holder {
+    position: relative;
+}
+
+.form-row .form-group {
+    width: 50%;
+    display: flex;
+}

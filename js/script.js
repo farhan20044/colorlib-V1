@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const finishButton = document.querySelector(".actions a[href='#finish']");
     const actionItems = document.querySelectorAll(".actions li");
 
-    // Show the current step and hide others
+    // Show the current step & hide others
     function showStep(step) {
         sections.forEach((section, index) => {
             section.style.display = index === step ? "block" : "none";
@@ -37,6 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    steps.forEach((step, index) => {
+        const link = step.querySelector("a");
+        link.addEventListener("click", function(e) {
+            e.preventDefault();
+            
+        });
+    });
+
     // Validate all required fields in current step
     function validateCurrentStep() {
         const currentSection = sections[currentStep];
@@ -54,20 +62,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 isValid = false;
             }
             
-            // Special validation for email
+            // validation for email (I only added @ & .com)
             if (input.id === "email" && input.value.trim() && !validateEmail(input.value)) {
                 input.classList.add("is-invalid");
                 isValid = false;
             }
             
-            // Special validation for names (only letters)
+            // for names (only letters)
             if ((input.id === "fname" || input.id === "lname") && input.value.trim() && !/^[A-Za-z ]+$/.test(input.value)) {
                 input.classList.add("is-invalid");
                 isValid = false;
             }
         });
 
-        // Additional validation for password section (section 2)
+        //(section 2) password validations
         if (currentStep === 1) {
             const currentPass = currentSection.querySelector("#current-pass")?.value;
             const newPass = currentSection.querySelector("#new-pass")?.value;
@@ -77,12 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
             if (newPass && confirmPass && newPass !== confirmPass) {
                 isValid = false;
                 
-                // Highlight the password fields
+                // field highlight if empty
                 currentSection.querySelectorAll("#new-pass, #confirm-pass").forEach(input => {
                     input.classList.add("is-invalid");
                 });
                 
-                // Add specific error message for password mismatch
+                // error message 
                 const passError = document.createElement("div");
                 passError.className = "error-message";
                 passError.style.color = "red";
@@ -101,10 +109,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (currentPass && newPass && currentPass === newPass) {
                 isValid = false;
                 
-                // Highlight the password fields
                 currentSection.querySelector("#new-pass").classList.add("is-invalid");
                 
-                // Add specific error message
                 const samePassError = document.createElement("div");
                 samePassError.className = "error-message";
                 samePassError.style.color = "red";
@@ -120,7 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Show general error message if validation fails
         if (!isValid) {
             const errorMessage = document.createElement("div");
             errorMessage.className = "error-message";
@@ -128,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
             errorMessage.style.margin = "10px 0";
             errorMessage.textContent = "Please fill in all required fields correctly";
             
-            // Only add general message if no specific password messages exist
+            // messages exist error
             if (!currentSection.querySelector(".error-message")) {
                 const heading = currentSection.querySelector("h3");
                 if (heading) {
@@ -148,13 +153,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return isValid;
     }
 
-    // Email validation helper
+    // Email validation @ & .com 
     function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     }
 
-    // Next button click handler
     nextButton.addEventListener("click", function (event) {
         event.preventDefault();
         
@@ -166,7 +170,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Previous button click handler
     prevButton.addEventListener("click", function (event) {
         event.preventDefault();
         if (currentStep > 0) {
@@ -175,7 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Finish button click handler
     finishButton.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateCurrentStep()) {
@@ -183,11 +185,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Make step indicators clickable
+    // step indicators clickable
     steps.forEach((step, index) => {
         step.addEventListener("click", function() {
-            // Only allow navigation to steps that are before the current step
-            // or to the next step (with validation)
+
             if (index < currentStep) {
                 currentStep = index;
                 showStep(currentStep);
@@ -201,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Clear validation errors when user starts typing
+    // Clear errors msg when i starts typing
     document.querySelectorAll("input").forEach(input => {
         input.addEventListener("input", function() {
             this.classList.remove("is-invalid");
@@ -212,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Prevent non-alphabetic characters in name fields
+    // Prevent non-alphabetic in name
     document.querySelectorAll("#fname, #lname").forEach(field => {
         field.addEventListener("keypress", function(e) {
             const char = String.fromCharCode(e.which);
@@ -231,4 +232,187 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize first step
     showStep(currentStep);
+
+
+// Product data - prices and names for section 3 
+const products = [
+    { name: "Cherry", price: 35 },
+    { name: "Mango", price: 20 }
+];
+
+const shippingOptions = {
+    free: 0,
+    local: 5 
+};
+
+//update cart totals
+function updateCartTotals() {
+    let subtotal = 0;
+    
+    // Calculate subtotal from all products
+    document.querySelectorAll("#wizard-p-2 #shop_table tbody tr").forEach((row, index) => {
+        const quantityInput = row.querySelector(".qty");
+        const quantity = parseInt(quantityInput.value) || 0;
+        subtotal += quantity * products[index].price;
+    });
+    
+    // Calculate service fee (5% of subtotal)
+    const serviceFee = subtotal * 0.05;
+    
+    // Get selected shipping option
+    let shippingFee = 0;
+    const selectedShipping = document.querySelector("#wizard-p-3 input[name='shipping']:checked");
+    if (selectedShipping) {
+        const shippingType = selectedShipping.nextSibling.textContent.trim().toLowerCase();
+        shippingFee = shippingType.includes('free') ? shippingOptions.free : shippingOptions.local;
+    }
+    
+    // Calculate total
+    const total = subtotal + serviceFee + shippingFee;
+    
+    // Update the totals in Section 4
+    document.querySelector("#wizard-p-3 .cart-subtotal:not(.shipping) td span.amount").textContent = `$${subtotal.toFixed(2)}`;
+    document.querySelector("#wizard-p-3 .cart-subtotal.service td span.amount").textContent = `$${serviceFee.toFixed(2)}`;
+    
+    // Update shipping display
+    const shippingDisplay = document.querySelector("#wizard-p-3 .shipping td");
+    if (shippingDisplay) {
+        shippingDisplay.innerHTML = `
+            <div class="checkbox">
+                <label>
+                    <input type="radio" name="shipping" ${shippingFee === 0 ? 'checked' : ''} data-fee="0">
+                    Free Shipping
+                    <span class="checkmark"></span>
+                </label>
+                <label>
+                    <input type="radio" name="shipping" ${shippingFee === 5 ? 'checked' : ''} data-fee="5">
+                    Local pickup: $${shippingOptions.local.toFixed(2)}
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <span>Calculate shipping</span>
+        `;
+        
+        // Add event listeners to shipping options
+        document.querySelectorAll("#wizard-p-3 input[name='shipping']").forEach(radio => {
+            radio.addEventListener("change", function() {
+                updateCartTotals();
+            });
+        });
+    }
+    
+    document.querySelector("#wizard-p-3 .order-total td span.amount").textContent = `$${total.toFixed(2)}`;
+}
+
+// Update individual row total
+function updateRowTotal(input) {
+    const row = input.closest("tr");
+    const price = products[Array.from(document.querySelectorAll("#wizard-p-2 #shop_table tbody tr")).indexOf(row)].price;
+    const quantity = parseInt(input.value) || 0;
+    const total = price * quantity;
+    
+    row.querySelector(".total-price span.amount").textContent = `$${total.toFixed(2)}`;
+}
+
+// Setup quantity change handlers
+function setupQuantityHandlers() {
+    document.querySelectorAll("#wizard-p-2 .quantity").forEach(quantityEl => {
+        const input = quantityEl.querySelector(".qty");
+        const plus = quantityEl.querySelector(".plus");
+        const minus = quantityEl.querySelector(".minus");
+        // plus
+        plus.addEventListener("click", function(e) {
+            e.preventDefault();
+            input.value = parseInt(input.value) + 1;
+            updateRowTotal(input);
+            updateCartTotals();
+        });
+        
+        // Minus 
+        minus.addEventListener("click", function(e) {
+            e.preventDefault();
+            const currentVal = parseInt(input.value);
+            if (currentVal > 0) {
+                input.value = currentVal - 1;
+                updateRowTotal(input);
+                updateCartTotals();
+            }
+        });
+        
+        // Direct input change
+        input.addEventListener("change", function() {
+            if (parseInt(this.value) < 0) {
+                this.value = 0;
+            }
+            updateRowTotal(this);
+            updateCartTotals();
+        });
+    });
+}
+
+// Section 3 validation
+function validateSection3() {
+    let isValid = true;
+    const section = document.getElementById("wizard-p-2");
+    
+    // Clear previous errors
+    section.querySelectorAll(".error-message").forEach(el => el.remove());
+    
+    // Check if at least one product has quantity > 0
+    const quantities = Array.from(document.querySelectorAll("#wizard-p-2 .qty")).map(input => parseInt(input.value) || 0);
+    if (!quantities.some(qty => qty > 0)) {
+        isValid = false;
+        
+        const errorMessage = document.createElement("div");
+        errorMessage.className = "error-message";
+        errorMessage.style.color = "red";
+        errorMessage.style.margin = "10px 0";
+        errorMessage.textContent = "Please add at least one item to your cart";
+        
+        const heading = section.querySelector("h3");
+        if (heading) {
+            heading.insertAdjacentElement("afterend", errorMessage);
+        } else {
+            section.insertAdjacentElement("afterbegin", errorMessage);
+        }
+    }
+    
+    return isValid;
+}
+
+// Wrap the original showStep function
+const originalShowStep = showStep;
+showStep = function(step) {
+    originalShowStep(step);
+    
+    // When showing section 4, update the totals
+    if (step === 3) { 
+        updateCartTotals();
+    }
+};
+
+// Wrap the original validateCurrentStep function
+const originalValidateCurrentStep = validateCurrentStep;
+validateCurrentStep = function() {
+    if (currentStep === 2) { 
+        return validateSection3();
+    }
+    return originalValidateCurrentStep();
+};
+
+// Initialize quantity handlers
+setupQuantityHandlers();
+
+// Initialize shipping options
+document.querySelectorAll("#wizard-p-3 input[name='shipping']").forEach(radio => {
+    radio.addEventListener("change", function() {
+        updateCartTotals();
+    });
 });
+
+updateCartTotals();
+
+    
+});
+
+
