@@ -1,50 +1,172 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let currentStep = 0; 
+    let currentStep = 0;
     const sections = document.querySelectorAll(".content section");
     const steps = document.querySelectorAll(".steps li");
     const nextButton = document.querySelector(".actions a[href='#next']");
     const prevButton = document.querySelector(".actions a[href='#previous']");
+    const finishButton = document.querySelector(".actions a[href='#finish']");
+    const actionItems = document.querySelectorAll(".actions li");
 
+    // Show the current step and hide others
     function showStep(step) {
-        sections.forEach((section) => (section.style.display = "none"));
-        sections[step].style.display = "block";
+        sections.forEach((section, index) => {
+            section.style.display = index === step ? "block" : "none";
+        });
 
-        steps.forEach((stepItem) => stepItem.classList.remove("current"));
-        steps[step].classList.add("current");
+        // Update step indicators
+        steps.forEach((stepItem, index) => {
+            const img = stepItem.querySelector("img:first-of-type");
+            if (img) {
+                img.src = `../images/step-${index + 1}${index === step ? '-active' : ''}.png`;
+            }
+            
+            stepItem.classList.toggle("current", index === step);
+            stepItem.classList.toggle("done", index < step);
+        });
 
+        // Update navigation buttons
         prevButton.parentElement.classList.toggle("disabled", step === 0);
-        // nextButton.style.display = step === sections.length - 1 ? "none" : "inline-block";
+        
+        // Show/hide finish button on last step
+        if (step === sections.length - 1) {
+            nextButton.parentElement.style.display = "none";
+            finishButton.parentElement.style.display = "block";
+        } else {
+            nextButton.parentElement.style.display = "block";
+            finishButton.parentElement.style.display = "none";
+        }
     }
-      
 
-    function validateFields(step) {
+    // Validate all required fields in current step
+    function validateCurrentStep() {
+        const currentSection = sections[currentStep];
+        const inputs = currentSection.querySelectorAll("input");
         let isValid = true;
-        const inputs = sections[step].querySelectorAll("input[required]");
-        inputs.forEach((input) => {
+        
+        // Clear previous errors
+        currentSection.querySelectorAll(".error-message").forEach(el => el.remove());
+        inputs.forEach(input => input.classList.remove("is-invalid"));
+
+        // Check each input
+        inputs.forEach(input => {
             if (!input.value.trim()) {
-                input.classList.add("error");
+                input.classList.add("is-invalid");
                 isValid = false;
-            } else {
-                input.classList.remove("error");
+            }
+            
+            // Special validation for email
+            if (input.id === "email" && input.value.trim() && !validateEmail(input.value)) {
+                input.classList.add("is-invalid");
+                isValid = false;
+            }
+            
+            // Special validation for names (only letters)
+            if ((input.id === "fname" || input.id === "lname") && input.value.trim() && !/^[A-Za-z ]+$/.test(input.value)) {
+                input.classList.add("is-invalid");
+                isValid = false;
             }
         });
+
+        // Additional validation for password section (section 2)
+        if (currentStep === 1) {
+            const currentPass = currentSection.querySelector("#current-pass")?.value;
+            const newPass = currentSection.querySelector("#new-pass")?.value;
+            const confirmPass = currentSection.querySelector("#confirm-pass")?.value;
+            
+            // Check if passwords match (only if they're not empty)
+            if (newPass && confirmPass && newPass !== confirmPass) {
+                isValid = false;
+                
+                // Highlight the password fields
+                currentSection.querySelectorAll("#new-pass, #confirm-pass").forEach(input => {
+                    input.classList.add("is-invalid");
+                });
+                
+                // Add specific error message for password mismatch
+                const passError = document.createElement("div");
+                passError.className = "error-message";
+                passError.style.color = "red";
+                passError.style.margin = "10px 0";
+                passError.textContent = "New password and confirm password do not match";
+                
+                const heading = currentSection.querySelector("h3");
+                if (heading) {
+                    heading.insertAdjacentElement("afterend", passError);
+                } else {
+                    currentSection.insertAdjacentElement("afterbegin", passError);
+                }
+            }
+            
+            // Check if new password is same as current password
+            if (currentPass && newPass && currentPass === newPass) {
+                isValid = false;
+                
+                // Highlight the password fields
+                currentSection.querySelector("#new-pass").classList.add("is-invalid");
+                
+                // Add specific error message
+                const samePassError = document.createElement("div");
+                samePassError.className = "error-message";
+                samePassError.style.color = "red";
+                samePassError.style.margin = "10px 0";
+                samePassError.textContent = "New password must be different from current password";
+                
+                const heading = currentSection.querySelector("h3");
+                if (heading) {
+                    heading.insertAdjacentElement("afterend", samePassError);
+                } else {
+                    currentSection.insertAdjacentElement("afterbegin", samePassError);
+                }
+            }
+        }
+
+        // Show general error message if validation fails
+        if (!isValid) {
+            const errorMessage = document.createElement("div");
+            errorMessage.className = "error-message";
+            errorMessage.style.color = "red";
+            errorMessage.style.margin = "10px 0";
+            errorMessage.textContent = "Please fill in all required fields correctly";
+            
+            // Only add general message if no specific password messages exist
+            if (!currentSection.querySelector(".error-message")) {
+                const heading = currentSection.querySelector("h3");
+                if (heading) {
+                    heading.insertAdjacentElement("afterend", errorMessage);
+                } else {
+                    currentSection.insertAdjacentElement("afterbegin", errorMessage);
+                }
+            }
+            
+            // Scroll to first invalid field
+            const firstInvalid = currentSection.querySelector(".is-invalid");
+            if (firstInvalid) {
+                firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        }
+
         return isValid;
     }
 
-    // Event listener for "Continue" button
-    nextButton.addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent link from refreshing page
+    // Email validation helper
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
 
-        if (validateFields(currentStep)) {
+    // Next button click handler
+    nextButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        
+        if (validateCurrentStep()) {
             if (currentStep < sections.length - 1) {
                 currentStep++;
                 showStep(currentStep);
             }
-        } else {
-            alert("Please fill in all required fields before continuing!");
         }
     });
 
+    // Previous button click handler
     prevButton.addEventListener("click", function (event) {
         event.preventDefault();
         if (currentStep > 0) {
@@ -53,88 +175,60 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Initialize first step
-    showStep(currentStep);
-});
-
-// validation
-document.addEventListener('DOMContentLoaded', function() {
-    const continueBtn = document.querySelector('a[href="#next"]');
-    
-    continueBtn.addEventListener('click', function(e) {
-        const currentSection = document.querySelector('.body.current');
-        if (currentSection.id === 'wizard-p-0') {
-            const inputs = currentSection.querySelectorAll('input[required]');
-            let isValid = true;
-            
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    input.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    input.classList.remove('is-invalid');
-                    
-                    if (input.type === 'email' && !validateEmail(input.value)) {
-                        input.classList.add('is-invalid');
-                        isValid = false;
-                    }
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                const firstInvalid = currentSection.querySelector('.is-invalid');
-                if (firstInvalid) {
-                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
+    // Finish button click handler
+    finishButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (validateCurrentStep()) {
+            document.getElementById("wizard").submit();
         }
     });
-    
-    // Email validation
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-    
-    // Clear validation when user starts typing
-    const inputs = document.querySelectorAll('input[required]');
-    inputs.forEach(input => {
-        input.addEventListener('input', function() {
-            if (this.value.trim()) {
 
-                if (this.id === 'fname' || this.id === 'lname') {
-                    const nameRegex = /^[A-Za-z ]*$/; 
-                    if (nameRegex.test(this.value)) {
-                        this.classList.remove('is-invalid');
-                    } else {
-                        this.classList.add('is-invalid');
-                    }
-                } else {
-                    this.classList.remove('is-invalid');
+    // Make step indicators clickable
+    steps.forEach((step, index) => {
+        step.addEventListener("click", function() {
+            // Only allow navigation to steps that are before the current step
+            // or to the next step (with validation)
+            if (index < currentStep) {
+                currentStep = index;
+                showStep(currentStep);
+            } else if (index === currentStep + 1) {
+                if (validateCurrentStep()) {
+                    currentStep = index;
+                    showStep(currentStep);
                 }
-            } else {
-                this.classList.remove('is-invalid');
+            }
+            // Don't allow jumping ahead more than one step
+        });
+    });
+
+    // Clear validation errors when user starts typing
+    document.querySelectorAll("input").forEach(input => {
+        input.addEventListener("input", function() {
+            this.classList.remove("is-invalid");
+            const errorMessage = this.closest("section")?.querySelector(".error-message");
+            if (errorMessage) {
+                errorMessage.remove();
             }
         });
     });
-    
-    //non-alphabetic
-    const nameFields = document.querySelectorAll('#fname, #lname');
-    nameFields.forEach(field => {
-        field.addEventListener('keypress', function(e) {
+
+    // Prevent non-alphabetic characters in name fields
+    document.querySelectorAll("#fname, #lname").forEach(field => {
+        field.addEventListener("keypress", function(e) {
             const char = String.fromCharCode(e.which);
             if (!/[A-Za-z ]/.test(char)) {
                 e.preventDefault();
             }
         });
         
-        // pasting
-        field.addEventListener('paste', function(e) {
-            const pasteData = e.clipboardData.getData('text');
+        field.addEventListener("paste", function(e) {
+            const pasteData = e.clipboardData.getData("text");
             if (!/^[A-Za-z ]+$/.test(pasteData)) {
                 e.preventDefault();
             }
         });
     });
+
+    // Initialize first step
+    showStep(currentStep);
 });

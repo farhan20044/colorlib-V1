@@ -1,5 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 *{
     font-family: "Lato", sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body::-webkit-scrollbar {
+    display: none;               
+}
+.is-invalid {
+    border: 1px solid red !important;
 }
 body {
     font-family: "Lato", sans-serif;
@@ -12,19 +23,43 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 }
+
+.steps ul li .step-arrow {
+    position: absolute;
+    top: 33%;
+    left: 113%;
+}
+.steps ul li:last-child {
+    margin-right: 0;
+}
+
+img {
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+input::placeholder {
+    font-size: 14px;
+    font-family: "Lato";
+    transform: translateY(1px);
+    color: #999;
+  }
+
+input[type="text"]:focus{
+    border: 1px solid green!important;
+
+}
+
+.actions {
+    margin-top: 30px;
+}
+
 form {
     display: block;
     margin-top: 0em;
     unicode-bidi: isolate;
-}
-.main{
-    color: black;
-    text-transform: uppercase;
-    font-size: 1.18rem;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-    font-weight: 900!important;
 }
 div {
     display: block;
@@ -33,6 +68,7 @@ div {
 .wrapper {
     width: 826px;
     height: 620px;
+    box-sizing: border-box;
     padding: 63px 90px 0;
     background: #fff;
 }
@@ -69,14 +105,14 @@ ul {
     margin-top: 14px;
 }
 a:-webkit-any-link {
-    color: -webkit-link;
+    
     cursor: pointer;
 }
-li {
+/* li {
     display: list-item;
     text-align: -webkit-match-parent;
     unicode-bidi: isolate;
-}
+} */
 ul {
     padding: 0;
     margin: 0;
@@ -91,21 +127,13 @@ a:-webkit-any-link {
     cursor: pointer;
     text-decoration: none;
 }
-p, h1, h2, h3, h4, h5, h6, ul {
-    margin: 0;
-}
-section {
-    display: block;
-    unicode-bidi: isolate;
-}
+
+
 .form-row {
     display: flex;
     margin-bottom: 20px;
 }
 
-.form-holder {
-    position: relative;
-}
 .form-holder i {
     position: absolute;
     top: 50%;
@@ -113,23 +141,7 @@ section {
     right: 20px;
     font-size: 16px;
 }
-.zmdi {
-    display: inline-block;
-    font: normal normal normal 14px / 1 'Material-Design-Iconic-Font';
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-h4 {
-    display: block;
-    margin-block-start: 1.33em;
-    margin-block-end: 1.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-}
+
 .form-control {
     height: 42px;
     border: 1px solid #e6e6e6;
@@ -142,17 +154,20 @@ h4 {
     width: 50%;
     margin-right: 20px;
 }
+
+.w-100{
+    width: 100% !important;
+}
+
+.form-row .form-holder:last-child {
+    margin-right: 0;
+}
+
+
 .form-holder {
     position: relative;
 }
-input[type="text"]:focus,input[type="tel"]:focus,input[type="password"]:focus,input[type="email"]:focus{
-    border: 1px solid green;
-    border-radius: 1px;
-}
-input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]) {
-    overflow-clip-margin: 0px !important;
-    overflow: clip !important;
-}
+
 input, textarea, select, button {
     font-family: "Lato-Regular";
     font-size: 14px;
@@ -162,17 +177,16 @@ input, textarea, select, button {
     display: flex;
 }
 .actions ul {
-    display: flex
-;
+    display: flex;
     justify-content: space-between;
 }
+
 .actions li:first-child a {
     width: 97px;
 }
 .actions li a {
     border: none;
-    display: inline-flex
-;
+    display: inline-flex;
     height: 42px;
     width: 132px;
     align-items: center;
@@ -194,20 +208,68 @@ input, textarea, select, button {
     margin-top: 14px;
 }
 
-.step-order {
-    display: block;
-    text-align: center;
+h3{
+    font-size: 20px;
+    color: #333;
     text-transform: uppercase;
-    font-size: 12px;
+    text-align: center;
+    font-weight: 900; 
+    letter-spacing: 2px;
+    margin-bottom: 29px;
+}
+
+
+table.cart th {
+    font-family: "Lato" , Bold;
     color: #666;
-    margin-top: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid #e6e6e6;
 }
-table.cart tr:last-child td {
-    padding-bottom: 0;
+table.cart {
+    width: 100%;
+    font-size: 15px;
+    margin-bottom: 17px;
 }
-table.cart tr:last-child td {
-    border: none;
+
+.cart_totals {
+    font-size: 15px;
+    color: #666;
+    width: 66.56%;
+    margin: auto;
+    margin-bottom: 31px;
 }
-table.cart .product-detail {
-    width: 22.45%;
+.cart_totals table {
+    width: 100%;
+}
+.cart_totals th {
+    font-family: "Lato-Bold";
+    color: #333;
+    text-align: left;
+    width: 65.81%;
+}
+.cart_totals th, .cart_totals td {
+    padding: 11px 0;
+    vertical-align: top;
+    text-align: left;
+}
+.checkbox label {
+    padding-left: 21px;
+    cursor: pointer;
+    display: block;
+    position: relative;
+    margin-bottom: 13px;
+}
+/* Add these styles to your existing CSS */
+.error {
+    border-color: #ff3860 !important;
+}
+
+.error-message {
+    color: #ff3860;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+input.error {
+    border: 1px solid #ff3860;
 }
