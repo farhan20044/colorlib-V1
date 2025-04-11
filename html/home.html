@@ -5,10 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>colorlib-wizard</title>
-    <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/input.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/form.css" />
-    <link rel="stylesheet" href="../css/table.css" />
+    <link rel="stylesheet" href="../css/outer.css">
+    <link rel="stylesheet" href="../css/cart.css" />
+    <!-- Google fonts -->
     <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +18,11 @@
         href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="vendor/date-picker/css/datepicker.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 </head>
@@ -26,7 +33,8 @@
             <div class="steps clearfix">
                 <ul role="tablist">
                     <li role="tab" aria-disabled="false" class="first current" aria-selected="true">
-                        <a id="wizard-t-2" href="#" aria-controls="wizard-p-2"><span class="current-info audible">current
+                        <a id="wizard-t-2" href="#" aria-controls="wizard-p-2"><span
+                                class="current-info audible">current
                                 step: </span><span class="number">1.</span>
                             <img src="../images/step-1-active.png" alt="Step 1">
                             <span class="step-order">Step 01</span></a><img src="../images/step-arrow.png" alt=""
@@ -52,7 +60,7 @@
                 <!-- SECTION 1 -->
                 <section id="wizard-p-0" role="tabpanel" aria-labelledby="wizard-h-0" class="body current"
                     aria-hidden="false" style="display: block;">
-                    <h3>Basic details</h3>
+                    <h3 class="lato-bold">Basic details</h3>
                     <div class="form-row">
                         <div class="form-holder">
                             <i class="zmdi zmdi-account"></i>
@@ -125,8 +133,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-holder w-100">
-                            <input type="password" class="form-control" placeholder="Enter Current Password" id="current-pass"
-                                data-has-listeners="true">
+                            <input type="password" class="form-control" placeholder="Enter Current Password"
+                                id="current-pass" data-has-listeners="true">
                             <i class="zmdi zmdi-lock-open"></i>
                         </div>
                     </div>
@@ -295,12 +303,12 @@
                 </section>
             </div>
             <div class="actions clearfix">
-                <ul role="menu" aria-label="Pagination">
+                <ul role="menu" aria-label="Pagination" style="display: contents;">
                     <li class="disabled" aria-disabled="true">
-                        <a href="#previous" role="menuitem">Back</a>
+                        <a href="#previous" class="back-button" role="menuitem">Back</a>
                     </li>
                     <li aria-hidden="false" aria-disabled="false">
-                        <a href="#next" role="menuitem">Continue</a>
+                        <a href="#next" class="next-button" role="menuitem">Continue</a>
                     </li>
                     <li aria-hidden="true" style="display: none">
                         <a href="#finish" role="menuitem">Proceed to checkout</a>

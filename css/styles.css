@@ -1,38 +1,177 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-* {
+.lato-thin {
   font-family: "Lato", sans-serif;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+  font-weight: 100;
+  font-style: normal;
 }
 
-body::-webkit-scrollbar {
-  display: none;
+.lato-light {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: normal;
 }
-.is-invalid {
-  border: 1px solid red !important;
+
+.lato-regular {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
+
+.lato-bold {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.lato-black {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.lato-thin-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.lato-light-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.lato-regular-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.lato-bold-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.lato-black-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
 body {
   font-family: "Lato", sans-serif;
   font-size: 14px;
   margin: 0;
   color: #999;
-  background: url(../images/form-wizard-bg.jpg) no-repeat center center;
+  background: url("../images/form-wizard-bg.jpg") no-repeat center center;
   height: 100vh;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
 }
 
-.steps ul li .step-arrow {
-  position: absolute;
-  top: 33%;
-  left: 113%;
+:focus {
+  outline: none;
 }
-.steps ul li:last-child {
-  margin-right: 0;
+
+textarea {
+  resize: none;
+}
+.is-invalid {
+  border: 1px solid red !important;
+  border-radius: 2px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  margin: 20px 0;
+  list-style: none;
+}
+
+.actions li {
+  margin: 0;
+}
+
+/* .actions li.back-button {
+  order: 1; 
+} */
+/* 
+.actions li.next-button,
+.actions li.finish-button {
+  order: 2; 
+  margin-left: auto; 
+} */
+
+/* .actions li.disabled {
+  visibility: hidden; 
+} */
+/* .actions.last-step-active ul {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100%;
+} */
+
+.actions.last-step-active li[aria-hidden="false"] {
+  display: block !important;
+  margin: 0 auto;
+}
+
+.actions.last-step-active li[aria-hidden="true"] {
+  display: none !important;
+}
+
+.actions.last-step-active li:first-child {
+  display: none !important;
+}
+
+select {
+  cursor: pointer;
+}
+select option[value=""][disabled] {
+  display: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+textarea {
+  resize: none;
 }
 
 img {
@@ -40,44 +179,39 @@ img {
   vertical-align: middle;
 }
 
-.actions {
-  margin-top: 30px;
-}
-
-div {
-  display: block;
-  unicode-bidi: isolate;
-}
 .wrapper {
   width: 826px;
   height: 620px;
-  box-sizing: border-box;
   padding: 63px 90px 0;
   background: #fff;
 }
-ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
+
+.wizard {
+  position: relative;
 }
+
+.steps .current-info,
+.steps .number {
+  display: none;
+}
+
 .steps ul {
   display: flex;
   justify-content: center;
   margin-bottom: 35px;
 }
-
-ul {
-  display: block;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-  unicode-bidi: isolate;
-}
 .steps ul li {
   margin-right: 10.8%;
   position: relative;
+}
+.steps ul li:last-child {
+  margin-right: 0;
+}
+.steps ul li .step-arrow {
+  position: absolute;
+  top: 33%;
+  left: 113%;
+  max-width: 57%;
 }
 .steps ul li .step-order {
   display: block;
@@ -87,41 +221,31 @@ ul {
   color: #666;
   margin-top: 14px;
 }
-a:-webkit-any-link {
-  cursor: pointer;
-}
-/* li {
-    display: list-item;
-    text-align: -webkit-match-parent;
-    unicode-bidi: isolate;
-} */
-ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
+
+h3 {
+  font-family: "Lato-Black";
+  font-size: 20px;
+  color: #333;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 29px;
+  font-weight: 900;
 }
 
-.steps .current-info,
-.steps .number {
-  display: none;
+.actions {
+  margin-top: 30px;
 }
-a:-webkit-any-link {
-  color: grey;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.w-100 {
-  width: 100% !important;
-}
-
 .actions ul {
   display: flex;
   justify-content: space-between;
 }
-
-.actions li:first-child a {
-  width: 97px;
+.actions ul.step-4 {
+  justify-content: center;
+}
+.actions ul.step-4 li:first-child {
+  display: none;
 }
 .actions li a {
   border: none;
@@ -138,58 +262,12 @@ a:-webkit-any-link {
   font-size: 15px;
   border-radius: 3px;
 }
-.steps ul li .step-order {
-  display: block;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 12px;
-  color: #666;
-  margin-top: 14px;
+.actions li a:hover {
+  background: #a1d15e;
 }
-
-h3 {
-  font-size: 20px;
-  color: #333;
-  text-transform: uppercase;
-  text-align: center;
-  font-weight: 900;
-  letter-spacing: 2px;
-  margin-bottom: 29px;
+.actions li:first-child a {
+  width: 97px;
 }
-
-.cart_totals {
-  font-size: 15px;
-  color: #666;
-  width: 66.56%;
-  margin: auto;
-  margin-bottom: 31px;
-}
-
-.cart_totals th {
-  font-family: "Lato-Bold";
-  color: #333;
-  text-align: left;
-  width: 65.81%;
-}
-.cart_totals th,
-.cart_totals td {
-  padding: 11px 0;
-  vertical-align: top;
-  text-align: left;
-}
-.checkbox label {
-  padding-left: 21px;
-  cursor: pointer;
-  display: block;
-  position: relative;
-  margin-bottom: 13px;
-}
-.error {
-  border-color: #ff3860 !important;
-}
-
-.error-message {
-  color: #ff3860;
-  font-size: 12px;
-  margin-top: 5px;
+.actions li:last-child a {
+  width: 234px;
 }
