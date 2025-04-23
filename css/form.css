@@ -1,65 +1,75 @@
-
 .form-row {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  .form-row .form-holder {
-    width: 50%;
-    margin-right: 20px;
-  }
-  .form-row .form-holder:last-child {
-    margin-right: 0;
-  }
-  .form-row .form-holder.w-100 {
-    width: 100%;
-    margin-right: 0;
-  }
-  .form-row .form-group {
-    width: 50%;
-    display: flex;
-  }
-  .form-row .form-group .form-holder {
-    margin-right: 21px;
-  }
-  .form-row .form-group .form-holder:last-child {
-    margin-right: 0;
-  }
-  
-  .form-holder {
-    position: relative;
-  }
-  .form-holder i {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 20px;
-    font-size: 16px;
-  }
-  .form-holder i.zmdi-eye {
-    cursor: pointer;
-  }
-  
-  .form-control {
-    height: 42px;
-    border: 1px solid #e6e6e6;
-    width: 100%;
-    background: none;
-    padding: 0 35px 0 19px;
-    color: #999;
-  }
-  .form-control:focus {
-    border-color: #8eb852;
-  }
-  .form-control::-webkit-input-placeholder {
-    color: #999;
-  }
-  .form-control::-moz-placeholder {
-    color: #999;
-  }
-  .form-control:-ms-input-placeholder {
-    color: #999;
-  }
-  .form-control:-moz-placeholder {
-    color: #999;
-  }
-  
+  display: flex;
+  margin-bottom: 20px;
+}
+.form-row .form-holder {
+  width: 50%;
+  margin-right: 20px;
+}
+.form-row .form-holder:last-child {
+  margin-right: 0;
+}
+.form-row .form-holder.w-100 {
+  width: 100%;
+  margin-right: 0;
+}
+.form-row .form-group {
+  width: 50%;
+  display: flex;
+}
+.form-row .form-group .form-holder {
+  margin-right: 21px;
+}
+.form-row .form-group .form-holder:last-child {
+  margin-right: 0;
+}
+
+.form-holder {
+  position: relative;
+}
+.form-holder i {
+  position: absolute;
+  top: 14px;
+  transform: none;
+  right: 20px;
+  font-size: 16px;
+  z-index: 1;
+}
+.form-holder i.zmdi-eye {
+  cursor: pointer;
+}
+.zmdi-account:before {
+  /* position: absolute;
+  top: 100%;
+  transform: translateY(-100%); */
+  content: '\f207';
+}
+
+.form-control {
+  height: 42px;
+  border: 1px solid #e6e6e6;
+  width: 100%;
+  background: none;
+  padding: 0 35px 0 19px;
+  color: #999;
+  position: relative;
+}
+.form-control:focus {
+  border-color: #8eb852;
+}
+.form-control::-webkit-input-placeholder {
+  color: #999;
+}
+.form-control::-moz-placeholder {
+  color: #999;
+}
+.form-control:-ms-input-placeholder {
+  color: #999;
+}
+.form-control:-moz-placeholder {
+  color: #999;
+}
+
+
+
+

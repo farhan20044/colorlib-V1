@@ -1,63 +1,3 @@
-.lato-thin {
-  font-family: "Lato", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.lato-light {
-  font-family: "Lato", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.lato-regular {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.lato-bold {
-  font-family: "Lato", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-}
-
-.lato-black {
-  font-family: "Lato", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-}
-
-.lato-thin-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 100;
-  font-style: italic;
-}
-
-.lato-light-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.lato-regular-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.lato-bold-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 700;
-  font-style: italic;
-}
-
-.lato-black-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 900;
-  font-style: italic;
-}
-
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -78,6 +18,14 @@ body {
   justify-content: center;
 }
 
+input,
+textarea,
+select,
+button {
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+}
+
 :focus {
   outline: none;
 }
@@ -93,7 +41,9 @@ textarea {
 .error-message {
   color: red;
   font-size: 12px;
-  margin-top: 5px;
+  margin-top: 0px;
+  position: relative;
+  display: block;
   margin-bottom: 0px;
 }
 
@@ -109,25 +59,6 @@ textarea {
 .actions li {
   margin: 0;
 }
-
-/* .actions li.back-button {
-  order: 1; 
-} */
-/* 
-.actions li.next-button,
-.actions li.finish-button {
-  order: 2; 
-  margin-left: auto; 
-} */
-
-/* .actions li.disabled {
-  visibility: hidden; 
-} */
-/* .actions.last-step-active ul {
-  display: flex !important;
-  justify-content: center !important;
-  width: 100%;
-} */
 
 .actions.last-step-active li[aria-hidden="false"] {
   display: block !important;
@@ -158,6 +89,7 @@ h5,
 h6,
 ul {
   margin: 0;
+  font-family: "Lato", sans-serif !important;
 }
 
 ul {
@@ -233,9 +165,14 @@ h3 {
   margin-bottom: 29px;
   font-weight: 900;
 }
+button:disabled {
+  opacity: 0.1;
+  background-color: #fff;
+  cursor: not-allowed;
+}
 
 .actions {
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .actions ul {
   display: flex;
@@ -270,4 +207,7 @@ h3 {
 }
 .actions li:last-child a {
   width: 234px;
+}
+.finish-btn{
+  min-width: 170px!important;
 }
