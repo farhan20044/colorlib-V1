@@ -2,38 +2,35 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: "Lato", sans-serif;
+  font-family: "Lato";
 }
 
 body {
-  font-family: "Lato", sans-serif;
   font-size: 14px;
   margin: 0;
   color: #999;
   background: url("../images/form-wizard-bg.jpg") no-repeat center center;
-  height: 100vh;
+  min-height: 100vh;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-
-input,
-textarea,
-select,
-button {
-  font-family: "Lato", sans-serif;
-  font-size: 14px;
+body::-webkit-scrollbar {
+  display: none;
 }
 
-:focus {
-  outline: none;
+.btn-success {
+  background-color: #8eb852 !important;
+}
+.btn-primary {
+  background-color: #8eb852 !important;
 }
 
 textarea {
   resize: none;
 }
+
 .is-invalid {
   border: 1px solid red !important;
   border-radius: 2px;
@@ -42,10 +39,9 @@ textarea {
 .error-message {
   color: red;
   font-size: 12px;
-  margin-top: 0px;
-  position: relative;
-  display: block;
+  margin-top: 2px!important;
   margin-bottom: 0px;
+  line-height: 1;
 }
 
 .actions {
@@ -53,12 +49,16 @@ textarea {
   justify-content: space-between;
   width: 100%;
   padding: 0;
-  margin: 20px 0;
+  margin: 10px 0;
   list-style: none;
 }
 
 .actions li {
   margin: 0;
+}
+
+.action li a {
+  padding-top: 7px !important;
 }
 
 .actions.last-step-active li[aria-hidden="false"] {
@@ -77,20 +77,9 @@ textarea {
 select {
   cursor: pointer;
 }
+
 select option[value=""][disabled] {
   display: none;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-ul {
-  margin: 0 ;
-  font-family: "Lato", sans-serif !important;
 }
 
 ul {
@@ -100,7 +89,7 @@ ul {
 }
 
 a {
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 textarea {
@@ -111,12 +100,22 @@ img {
   max-width: 100%;
   vertical-align: middle;
 }
-
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 .wrapper {
   width: 826px;
-  height: 620px;
+  height: auto;
+  min-height: 620px;
+  max-height: 90vh;
   padding: 63px 90px 0;
   background: #fff;
+  overflow-y: auto;
+  position: relative;
+
 }
 
 .wizard {
@@ -131,60 +130,71 @@ img {
 .steps ul {
   display: flex;
   justify-content: center;
-  margin-bottom: 35px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
 }
+
 .steps ul li {
   margin-right: 10.8%;
   position: relative;
+  margin-bottom: 15px;
 }
+
 .steps ul li:last-child {
   margin-right: 0;
 }
+
 .steps ul li .step-arrow {
   position: absolute;
   top: 33%;
   left: 113%;
   max-width: 57%;
 }
+
 .steps ul li .step-order {
   display: block;
   text-align: center;
   text-transform: uppercase;
   font-size: 12px;
   color: #666;
-  margin-top: 14px;
+  margin-top: 13px;
+}
+.step-order {
+  margin-top: 14px !important;
 }
 
 h3 {
-  font-family: "Lato-Black";
+  font-family: "Lato";
   font-size: 20px;
   color: #333;
   text-transform: uppercase;
   text-align: center;
   font-weight: 900;
   letter-spacing: 2px;
-  margin-bottom: 29px;
+  margin-bottom: 33px;
   font-weight: 900;
 }
+
 button:disabled {
   opacity: 0.1;
   background-color: #fff;
   cursor: not-allowed;
 }
 
-.actions {
-  margin-top: 10px;
-}
 .actions ul {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
+
 .actions ul.step-4 {
   justify-content: center;
 }
+
 .actions ul.step-4 li:first-child {
   display: none;
 }
+
 .actions li a {
   border: none;
   display: inline-flex;
@@ -193,22 +203,282 @@ button:disabled {
   align-items: center;
   color: #fff;
   cursor: pointer;
-  background: #8eb852;
   text-transform: uppercase;
   justify-content: center;
   letter-spacing: 1px;
   font-size: 15px;
   border-radius: 3px;
 }
-.actions li a:hover {
-  background: #a1d15e;
-}
+
 .actions li:first-child a {
   width: 97px;
 }
+
 .actions li:last-child a {
   width: 234px;
 }
-.finish-btn{
-  min-width: 170px!important;
+
+.finish-btn {
+  min-width: 170px !important;
+}
+
+.form-holder {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-holder:has(.error-message) {
+  margin-bottom: 10px;
+}
+
+.form-holder i {
+  position: absolute;
+  top: 21px;
+  transform: translateY(-50%);
+  right: 20px;
+  font-size: 16px;
+}
+
+.form-holder i.zmdi-eye {
+  cursor: pointer;
+}
+.form-holder input::placeholder {
+  font-family: "Lato" !important;
+  transform: translateY(-1px);
+}
+
+input[placeholder="Email ID"]::placeholder,
+input[placeholder="Your User ID"]::placeholder,
+input[placeholder="Phone Number"]::placeholder,
+input[placeholder="Reference Coder"]::placeholder {
+  position: relative;
+  top: -1px;
+}
+input[placeholder="Confirm New Password"]::placeholder,
+input[placeholder="Enter the Current Password"]::placeholder {
+  position: relative;
+  bottom: 1px;
+}
+
+.row {
+  --bs-gutter-x: 1.25rem !important;
+}
+
+.zmdi-account:before {
+  content: "\f207";
+}
+
+.form-control {
+  height: 42px;
+  border: 1px solid #e6e6e6;
+  width: 100%;
+  background: none;
+  padding: 0 35px 0 19px;
+  color: #999;
+  border-radius: 0;
+}
+
+.form-control:focus {
+  border-color: #8eb852;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #999;
+  font-family: "Lato" !important;
+  font-size: 14px;
+}
+
+.form-control::-moz-placeholder {
+  color: #999;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #999;
+}
+
+.form-control:-moz-placeholder {
+  color: #999;
+}
+
+.input-icon {
+  padding-right: 40px;
+}
+
+.icon-input {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #999;
+  pointer-events: none;
+  font-size: 18px;
+}
+
+.table-cart tbody tr td {
+  vertical-align: middle !important;
+}
+
+.product-thumb {
+  text-align: center;
+}
+
+.product-thumb a {
+  margin-left: -16px;
+}
+
+.product-detail .product-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.d-none {
+  display: none !important;
+}
+.center {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity .plus,
+.quantity .minus {
+  cursor: pointer;
+  user-select: none;
+  color: #aaaaaa !important;
+}
+.plus {
+  margin-left: 6px;
+}
+.minus {
+  margin-right: 6px;
+}
+.input-text {
+  margin-right: 0px;
+}
+.top-1 {
+  position: relative;
+  top: 1px;
+}
+
+.quantity input.qty {
+  width: 50px;
+  text-align: center;
+}
+
+.total-price {
+  text-align: center;
+}
+
+.product-remove {
+  text-align: center;
+}
+
+.product-remove a {
+  color: #ff0000;
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.left {
+  position: relative;
+  left: -3px;
+}
+
+input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+button:focus,
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.form-control.is-invalid {
+  background-image: none;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.muted {
+  color: #999 !important;
+}
+
+.zmdi-close-circle-o:before {
+  content: "\f134";
+  font-size: 15px;
+  margin-left: 13px;
+}
+
+/* Adjust the actions div to stay at the bottom */
+.actions.clearfix {
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
+
+/* Responsive styles */
+@media (max-width: 991px) {
+  .steps ul li .step-arrow {
+    max-width: 40%;
+    left: 105%;
+  }
+}
+
+@media (max-width: 767px) {
+  .wrapper {
+    width: 100vw;
+  }
+  .steps ul li img {
+    max-width: 60px;
+  }
+
+  .steps ul li .step-order {
+    font-size: 10px;
+  }
+
+  /* Update the actions ul styling for mobile screens */
+  .actions ul {
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .actions li {
+    margin-bottom: 0;
+    margin-left: 10px;
+    width: auto;
+  }
+
+  /* Make sure the buttons have proper width on mobile */
+  .actions li a {
+    width: auto;
+    min-width: 97px;
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .steps ul li img {
+    max-width: 30px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
 }

@@ -1,6 +1,6 @@
 .form-row {
   display: flex;
-  margin-bottom: 20px !important;
+  margin-bottom: 20px;
 }
 .form-row .form-holder {
   width: 50%;
@@ -29,11 +29,10 @@
 }
 .form-holder i {
   position: absolute;
-  top: 14px;
-  transform: none;
+  top: 50%;
+  transform: translateY(-50%);
   right: 20px;
   font-size: 16px;
-  z-index: 1;
 }
 .form-holder i.zmdi-eye {
   cursor: pointer;
@@ -52,7 +51,6 @@
   background: none;
   padding: 0 35px 0 19px;
   color: #999;
-  position: relative;
 }
 .form-control:focus {
   border-color: #8eb852;
@@ -69,7 +67,3 @@
 .form-control:-moz-placeholder {
   color: #999;
 }
-
-
-
-

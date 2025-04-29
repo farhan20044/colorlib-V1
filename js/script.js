@@ -1,19 +1,23 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const API_URL = "https://680835e3942707d722dd9290.mockapi.io/api/formdata/data";
-  const SERVICE_FEE = 5.6;
-  const products = [
-    { name: "Cherry", price: 35 },
-    { name: "Mango", price: 20 }
-  ];
+import { BUTTON_TEXT } from "./constants"
 
-  const StepNames = {
+document.addEventListener("DOMContentLoaded", () => {
+  const API_URL = "https://680835e3942707d722dd9290.mockapi.io/api/formdata/data"
+  const SERVICE_FEE = 5.6
+
+  // PRODUCTS
+  const PRODUCTS = [
+    { name: "Cherry", price: 35 },
+    { name: "Mango", price: 20 },
+  ]
+
+  const STEP_NAMES = {
     BASIC_DETAILS: 0,
     CHANGE_PASSWORD: 1,
     CART: 2,
-    BILL: 3
-  };
+    BILL: 3,
+  }
 
-  const ValidationMessages = {
+  const VALIDATION_MESSAGES = {
     REQUIRED: "This field is required",
     LETTERS_ONLY: "Only letters allowed",
     NUMBERS_ONLY: "Only numbers allowed",
@@ -21,78 +25,118 @@ document.addEventListener("DOMContentLoaded", () => {
     PASSWORDS_MATCH: "Current passwords must match",
     NEW_PASSWORDS_MATCH: "New passwords don't match",
     PASSWORD_DIFFERENT: "New password must be different from current password",
-    CART_EMPTY: "Please add at least one product to your cart"
-  };
+    CART_EMPTY: "Please add at least one product to your cart",
+  }
 
-  const ButtonText = {
+  const BUTTON_TEXT = {
     CONTINUE: "Continue",
     CHECKOUT: "Proceed to Checkout",
-    UPLOADING: "Uploading..."
-  };
+    UPLOADING: "Uploading...",
+  }
 
-  let currentStep = StepNames.BASIC_DETAILS;
+  let currentStep = STEP_NAMES.BASIC_DETAILS
   const sections = document.querySelectorAll(".content section")
   const steps = document.querySelectorAll(".steps li")
   const nextButton = document.querySelector(".actions a[href='#next']")
   const prevButton = document.querySelector(".actions a[href='#previous']")
   const finishButton = document.querySelector(".actions a[href='#finish']")
   const actionsDiv = document.querySelector(".actions.clearfix")
+  const ulElement = document.querySelector('.actions ul[role="menu"]')
+
+  // Function to handle step navigation
+  function navigateToStep(stepIndex) {
+    if (stepIndex === currentStep) return
+
+    if (stepIndex < currentStep) {
+      currentStep = stepIndex
+      showStep(currentStep)
+      return
+    }
+
+    for (let i = 0; i < stepIndex; i++) {
+      if (i <= currentStep) {
+        const tempStep = currentStep
+        currentStep = i
+        if (!validateCurrentStep()) {
+          currentStep = tempStep
+          return false
+        }
+        currentStep = tempStep
+      }
+    }
+
+    currentStep = stepIndex
+    showStep(currentStep)
+    return true
+  }
 
   // Show the current step & hide others
   function showStep(step) {
     sections.forEach((section, index) => {
       section.style.display = index === step ? "block" : "none"
-      section.classList.toggle("last-step-active", index === step && index === sections.length - 1)
+      section.setAttribute("aria-hidden", index !== step)
     })
 
     steps.forEach((stepItem, index) => {
       const img = stepItem.querySelector("img:first-of-type")
       if (img) {
-        img.src = `../images/step-${index + 1}${index === step ? "-active" : ""}.png`
+        if (index === step) {
+          img.src = `../images/step-${index + 1}-active.png`
+        } else {
+          img.src = `../images/step-${index + 1}.png`
+        }
       }
 
       stepItem.classList.toggle("current", index === step)
       stepItem.classList.toggle("done", index < step)
+      stepItem.setAttribute("aria-selected", index === step)
+      stepItem.setAttribute("aria-disabled", index > step)
     })
 
-    prevButton.parentElement.style.visibility = "visible"
+    // Reset the actions div styling to maintain consistent height
+    actionsDiv.style.marginTop = ""
+    nextButton.style.position = ""
+    nextButton.style.margin = ""
+    ulElement.style.display = ""
+    ulElement.style.justifyContent = ""
 
-    if (step === StepNames.BASIC_DETAILS) {
+    // Apply specific styles based on current step
+    if (step === STEP_NAMES.BASIC_DETAILS || step === STEP_NAMES.CHANGE_PASSWORD) {
+      // Ensure consistent height for pages 1 and 2
+      actionsDiv.style.height = "auto"
+      actionsDiv.style.marginTop = "10px"
+    } else if (step === STEP_NAMES.CART) {
+      actionsDiv.style.marginTop = "30px"
+    }
+
+    if (step === STEP_NAMES.BASIC_DETAILS) {
       prevButton.parentElement.classList.add("disabled")
       prevButton.style.opacity = "0.5"
       prevButton.style.cursor = "not-allowed"
+      prevButton.style.display = "flex"
     } else {
       prevButton.parentElement.classList.remove("disabled")
       prevButton.style.opacity = "1"
       prevButton.style.cursor = "pointer"
+      prevButton.style.display = "flex"
     }
 
-    if (step === StepNames.BILL) {
-      prevButton.parentElement.style.display = "none"
-      nextButton.innerHTML = "Proceed to Checkout"
-      actionsDiv.style.display = "flex"
-      actionsDiv.style.alignItems = "center"
-      actionsDiv.style.justifyContent = "center"
+    if (step === STEP_NAMES.BILL) {
+      nextButton.innerHTML = BUTTON_TEXT.CHECKOUT
       nextButton.classList.add("finish-btn")
       nextButton.style.width = "234px"
+      prevButton.classList.add("d-none")
+      ulElement.style.display = "contents"
+
       // Update cart totals when showing the last step
       updateCartTotals()
     } else {
-      prevButton.parentElement.style.display = "block"
-      nextButton.innerHTML = "Continue"
-      actionsDiv.style.display = "inline-flex"
-      actionsDiv.style.justifyContent = "space-between"
+      nextButton.innerHTML = BUTTON_TEXT.CONTINUE
       nextButton.classList.remove("finish-btn")
       nextButton.style.width = "132px"
+      prevButton.classList.remove("d-none")
     }
   }
-
-  steps.forEach((step, index) => {
-    const link = step.querySelector("a")
-    link.addEventListener("click", (e) => {
-      e.preventDefault()
-    })
-  })
 
   // Validate all required fields in current step
   function validateCurrentStep() {
@@ -100,33 +144,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputs = currentSection.querySelectorAll("input")
     let isValid = true
 
+    // Remove existing error messages
     currentSection.querySelectorAll(".error-message").forEach((el) => el.remove())
     inputs.forEach((input) => input.classList.remove("is-invalid"))
 
     // For cart validation (step 3)
-    if (currentStep === StepNames.CART) {
+    if (currentStep === STEP_NAMES.CART) {
       return validateSection3()
     }
 
     inputs.forEach((input) => {
-      if (input.id === "city") {
-        if (input.value.trim() && !/^[A-Za-z ]+$/.test(input.value.trim())) {
-          input.classList.add("is-invalid")
-          const errorMsg = document.createElement("div")
-          errorMsg.className = "error-message"
-          errorMsg.textContent = ValidationMessages.LETTERS_ONLY
-          input.parentNode.insertBefore(errorMsg, input.nextSibling)
-          isValid = false
-        }
-        return
-      }
+      // Skip reference code as it's optional
+      if (input.id === "refcode") return
 
-      if (!input.value.trim()) {
+      if (input.hasAttribute("required") && !input.value.trim()) {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = ValidationMessages.REQUIRED
-        input.parentNode.insertBefore(errorMsg, input.nextSibling)
+        errorMsg.textContent = VALIDATION_MESSAGES.REQUIRED
+        errorMsg.style.color = "red"
+        errorMsg.style.fontSize = "12px"
+        errorMsg.style.marginTop = "0px"
+        input.parentNode.appendChild(errorMsg)
         isValid = false
       }
 
@@ -134,37 +173,46 @@ document.addEventListener("DOMContentLoaded", () => {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = ValidationMessages.EMAIL_INVALID
-        input.parentNode.insertBefore(errorMsg, input.nextSibling)
+        errorMsg.textContent = VALIDATION_MESSAGES.EMAIL_INVALID
+        errorMsg.style.color = "red"
+        errorMsg.style.fontSize = "12px"
+        errorMsg.style.marginTop = "0px"
+        input.parentNode.appendChild(errorMsg)
         isValid = false
       }
 
-      // for names, state (only letters)
+      // For names, state, country (only letters)
       if (
-        (input.id === "fname" || input.id === "lname" || input.id === "state" || input.id === "country") &&
+        (input.id === "name" || input.id === "fullname" || input.id === "state" || input.id === "country") &&
         input.value.trim() &&
         !/^[A-Za-z ]+$/.test(input.value)
       ) {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = ValidationMessages.LETTERS_ONLY
-        input.parentNode.insertBefore(errorMsg, input.nextSibling)
+        errorMsg.textContent = VALIDATION_MESSAGES.LETTERS_ONLY
+        errorMsg.style.color = "red"
+        errorMsg.style.fontSize = "12px"
+        errorMsg.style.marginTop = "0px"
+        input.parentNode.appendChild(errorMsg)
         isValid = false
       }
 
-      if (input.id === "phone" && input.value.trim() && !/^[0-9]+$/.test(input.value)) {
+      if (input.id === "phone" && input.value.trim() && !/^[0-9+\-\s()]+$/.test(input.value)) {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = ValidationMessages.NUMBERS_ONLY
-        input.parentNode.insertBefore(errorMsg, input.nextSibling)
+        errorMsg.textContent = VALIDATION_MESSAGES.NUMBERS_ONLY
+        errorMsg.style.color = "red"
+        errorMsg.style.fontSize = "12px"
+        errorMsg.style.marginTop = "0px"
+        input.parentNode.appendChild(errorMsg)
         isValid = false
       }
     })
 
     // Password validation (step 2)
-    if (currentStep === 1) {
+    if (currentStep === STEP_NAMES.CHANGE_PASSWORD) {
       const currentPass = currentSection.querySelector("#current-pass")?.value
       const enterCurrentPass = currentSection.querySelector("#enter-current-pass")?.value
       const newPass = currentSection.querySelector("#new-pass")?.value
@@ -177,8 +225,11 @@ document.addEventListener("DOMContentLoaded", () => {
           input.classList.add("is-invalid")
           const errorMsg = document.createElement("div")
           errorMsg.className = "error-message"
-          errorMsg.textContent = ValidationMessages.PASSWORDS_MATCH
-          input.parentNode.insertBefore(errorMsg, input.nextSibling)
+          errorMsg.textContent = VALIDATION_MESSAGES.PASSWORDS_MATCH
+          errorMsg.style.color = "red"
+          errorMsg.style.fontSize = "12px"
+          errorMsg.style.marginTop = "0px"
+          input.parentNode.appendChild(errorMsg)
         })
       }
 
@@ -188,8 +239,11 @@ document.addEventListener("DOMContentLoaded", () => {
           input.classList.add("is-invalid")
           const errorMsg = document.createElement("div")
           errorMsg.className = "error-message"
-          errorMsg.textContent = ValidationMessages.NEW_PASSWORDS_MATCH
-          input.parentNode.insertBefore(errorMsg, input.nextSibling)
+          errorMsg.textContent = VALIDATION_MESSAGES.NEW_PASSWORDS_MATCH
+          errorMsg.style.color = "red"
+          errorMsg.style.fontSize = "12px"
+          errorMsg.style.marginTop = "0px"
+          input.parentNode.appendChild(errorMsg)
         })
       }
 
@@ -199,20 +253,18 @@ document.addEventListener("DOMContentLoaded", () => {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = ValidationMessages.PASSWORD_DIFFERENT
-        input.parentNode.insertBefore(errorMsg, input.nextSibling)
+        errorMsg.textContent = VALIDATION_MESSAGES.PASSWORD_DIFFERENT
+        errorMsg.style.color = "red"
+        errorMsg.style.fontSize = "12px"
+        errorMsg.style.marginTop = "0px"
+        input.parentNode.appendChild(errorMsg)
       }
-    }
-
-    // Scroll to first invalid field
-    const firstInvalid = currentSection.querySelector(".is-invalid")
-    if (firstInvalid) {
-      firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" })
     }
 
     return isValid
   }
-  //email validation
+
+  // Email validation
   function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return re.test(email)
@@ -222,17 +274,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function resetFormData() {
     document.querySelectorAll("input").forEach((input) => {
       if (input.type === "radio") {
-        if (input.defaultChecked) {
-          input.checked = true
-        } else {
-          input.checked = false
-        }
-      } else if (input.type === "number") {
-        if (input.classList.contains("qty")) {
-          input.value = "1"
-        } else {
-          input.value = ""
-        }
+        input.checked = input.defaultChecked
+      } else if (input.type === "number" && input.classList.contains("qty")) {
+        input.value = "1"
       } else {
         input.value = ""
       }
@@ -241,9 +285,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Reset product quantities and update totals
     document.querySelectorAll("#wizard-p-2 .qty").forEach((input) => {
       input.value = "1"
-    })
-
-    document.querySelectorAll("#wizard-p-2 .qty").forEach((input) => {
       updateRowTotal(input)
     })
 
@@ -257,7 +298,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartItems = []
     document.querySelectorAll("#wizard-p-2 #shop_table tbody tr").forEach((row, index) => {
       const productName = row.querySelector(".product-detail a")?.textContent || ""
-      const price = Number.parseFloat(row.querySelector(".product-detail span:nth-child(3)")?.textContent || "0")
+      const priceText = row.querySelector(".product-detail span:nth-child(3)")?.textContent || "0"
+      const price = Number.parseFloat(priceText.replace("$", ""))
       const quantity = Number.parseInt(row.querySelector(".qty")?.value || "0")
       const totalPrice = price * quantity
 
@@ -270,26 +312,19 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     // Get subtotal and total from the summary section
-    const subtotal =
-      document
-        .querySelector("#wizard-p-3 .cart-subtotal:not(.shipping) td .woocommerce-Price-amount.amount")
-        ?.textContent.replace(/[^0-9.]/g, "") || "0"
-
-    const total =
-      document
-        .querySelector("#wizard-p-3 .order-total td .woocommerce-Price-amount.amount")
-        ?.textContent.replace(/[^0-9.]/g, "") || "0"
+    const subtotal = document.querySelector(".subtotal-amount")?.textContent || "0"
+    const total = document.querySelector(".total-amount")?.textContent || "0"
 
     const formData = {
-      firstName: document.getElementById("fname")?.value || "",
-      lastName: document.getElementById("lname")?.value || "",
+      firstName: document.getElementById("name")?.value || "",
+      lastName: document.getElementById("fullname")?.value || "",
       email: document.getElementById("email")?.value || "",
-      userid: randomUserId,
+      userid: document.getElementById("userid")?.value || randomUserId,
       Country: document.getElementById("country")?.value || "",
       state: document.getElementById("state")?.value || "",
       city: document.getElementById("city")?.value || "",
       phoneNumber: document.getElementById("phone")?.value || "",
-      referenceid: randomReferenceId,
+      referenceid: document.getElementById("refcode")?.value || randomReferenceId,
       curentPassword: document.getElementById("current-pass")?.value || "",
       password: document.getElementById("new-pass")?.value || "",
       cartItems: cartItems,
@@ -300,12 +335,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return formData
   }
 
-  //Upload form data to the API
+  // Upload form data to the API
   async function uploadFormData() {
     try {
       const formData = collectFormData()
-      nextButton.innerHTML = ButtonText.UPLOADING
+      nextButton.innerHTML = BUTTON_TEXT.UPLOADING
       nextButton.disabled = true
+      nextButton.style.cursor = "not-allowed"
+      nextButton.style.pointerEvents = "none"
 
       console.log("Sending data to API:", JSON.stringify(formData, null, 2))
 
@@ -317,14 +354,13 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(formData),
       })
 
-      console.log("Raw API response:", response)
-
       if (!response.ok) {
         throw new Error(`API error: ${response.status} - ${response.statusText}`)
       }
 
       const result = await response.json()
       console.log("Form data uploaded successfully:", result)
+
       const successMsg = document.createElement("div")
       successMsg.className = "success-message"
       successMsg.textContent = "Form data uploaded successfully!"
@@ -343,8 +379,10 @@ document.addEventListener("DOMContentLoaded", () => {
         resetFormData()
         currentStep = 0
         showStep(currentStep)
-        nextButton.innerHTML = "Continue"
+        nextButton.innerHTML = BUTTON_TEXT.CONTINUE
         nextButton.disabled = false
+        nextButton.style.cursor = "pointer"
+        nextButton.style.pointerEvents = "auto"
         successMsg.remove()
       }, 2000)
 
@@ -352,54 +390,43 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.error("Error uploading form data:", error)
 
+      // Reset button state
+      nextButton.innerHTML = BUTTON_TEXT.CHECKOUT
+      nextButton.disabled = false
+      nextButton.style.cursor = "pointer"
+      nextButton.style.pointerEvents = "auto"
+
+      // Show error message
       const errorMsg = document.createElement("div")
       errorMsg.className = "error-message"
-      errorMsg.innerHTML = `
-      <p>Error uploading form data:</p>
-      <p>${error.message}</p>
-      <button id="retry-upload" style="background: #4CAF50; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">Retry Upload</button>
-      <button id="test-api" style="background: #2196F3; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-left: 10px;">Test API Connection</button>
-    `
-      errorMsg.style.color = "red"
+      errorMsg.textContent = "Failed to upload data. Please make sure you're connected to the internet."
+      errorMsg.style.color = "white"
       errorMsg.style.padding = "10px"
       errorMsg.style.marginTop = "10px"
       errorMsg.style.textAlign = "center"
       errorMsg.style.fontWeight = "bold"
-      errorMsg.style.backgroundColor = "#ffebee"
+      errorMsg.style.backgroundColor = "#f44336"
       errorMsg.style.borderRadius = "4px"
 
       const currentSection = sections[currentStep]
       currentSection.appendChild(errorMsg)
 
-      // Add event listeners for retry and test buttons
-      document.getElementById("retry-upload").addEventListener("click", async () => {
+      setTimeout(() => {
         errorMsg.remove()
-        await uploadFormData()
-      })
-
-      document.getElementById("test-api").addEventListener("click", async () => {
-        await testApiConnection()
-      })
-
-      // Reset button
-      nextButton.innerHTML = "Proceed to Checkout"
-      nextButton.disabled = false
+      }, 1000)
 
       return false
     }
   }
 
+  // Event listeners for navigation buttons
   nextButton.addEventListener("click", async (event) => {
     event.preventDefault()
 
-    if (validateCurrentStep()) {
-      if (currentStep < sections.length - 1) {
-        currentStep++
-        showStep(currentStep)
-      } else if (currentStep === sections.length - 1) {
-        // Upload form data to the API when on the last step
-        await uploadFormData()
-      }
+    if (currentStep === sections.length - 1) {
+      await uploadFormData()
+    } else if (validateCurrentStep()) {
+      navigateToStep(currentStep + 1)
     }
   })
 
@@ -412,27 +439,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
-  finishButton.addEventListener("click", (event) => {
-    event.preventDefault()
-    if (validateCurrentStep()) {
-      resetFormData()
-      currentStep = 0
-      showStep(currentStep)
-    }
-  })
-
-  // step indicators clickable
-  steps.forEach((step, index) => {
-    step.addEventListener("click", () => {
-      if (index < currentStep) {
-        currentStep = index
-        showStep(currentStep)
-      } else if (index === currentStep + 1) {
-        if (validateCurrentStep()) {
-          currentStep = index
-          showStep(currentStep)
-        }
-      }
+  // Add click event listeners to step navigation items
+  steps.forEach((stepItem, index) => {
+    const stepLink = stepItem.querySelector("a")
+    stepLink.addEventListener("click", (e) => {
+      e.preventDefault()
+      navigateToStep(index)
     })
   })
 
@@ -440,15 +452,15 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("input").forEach((input) => {
     input.addEventListener("input", function () {
       this.classList.remove("is-invalid")
-      const errorMessage = this.nextElementSibling
-      if (errorMessage && errorMessage.classList.contains("error-message")) {
+      const errorMessage = this.parentNode.querySelector(".error-message")
+      if (errorMessage) {
         errorMessage.remove()
       }
     })
   })
 
   // Prevent non-alphabetic in name, state, and city fields
-  document.querySelectorAll("#fname, #lname, #state, #city, #country").forEach((field) => {
+  document.querySelectorAll("#name, #fullname, #state, #city, #country").forEach((field) => {
     field.addEventListener("keypress", (e) => {
       const char = String.fromCharCode(e.which)
       if (!/[A-Za-z ]/.test(char)) {
@@ -465,21 +477,22 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  document.querySelector("#phone").addEventListener("keypress", (e) => {
+  // Restrict phone input to numbers and special characters
+  document.querySelector("#phone")?.addEventListener("keypress", (e) => {
     const char = String.fromCharCode(e.which)
-    if (!/[0-9+-\s()]/.test(char)) {
+    if (!/[0-9+\-\s()]/.test(char)) {
       e.preventDefault()
     }
   })
 
-  document.querySelector("#phone").addEventListener("paste", (e) => {
+  document.querySelector("#phone")?.addEventListener("paste", (e) => {
     const pasteData = e.clipboardData.getData("text")
-    if (!/^[0-9+-\s()]+$/.test(pasteData)) {
+    if (!/^[0-9+\-\s()]+$/.test(pasteData)) {
       e.preventDefault()
     }
   })
 
-  // CART
+  // CART FUNCTIONS
 
   function updateCartTotals() {
     let subtotal = 0
@@ -487,37 +500,31 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("#wizard-p-2 #shop_table tbody tr").forEach((row, index) => {
       const quantityInput = row.querySelector(".qty")
       const quantity = Number.parseInt(quantityInput.value) || 0
-      subtotal += quantity * products[index].price
+      const price = PRODUCTS[index]?.price || 0
+      subtotal += quantity * price
     })
 
     const serviceFee = SERVICE_FEE
-
     const total = subtotal + serviceFee
 
-    const subtotalElement = document.querySelector(
-      "#wizard-p-3 .cart-subtotal:not(.shipping) td .woocommerce-Price-amount.amount",
-    )
+    // Update subtotal in cart totals
+    const subtotalElement = document.querySelector(".subtotal-amount")
     if (subtotalElement) {
-      subtotalElement.innerHTML = `<span class="woocommerce-Price-currencySymbol">$</span>${subtotal.toFixed(2)}`
+      subtotalElement.textContent = subtotal.toFixed(2)
     }
 
-    const serviceFeeElement = document.querySelector(
-      "#wizard-p-3 tr.cart-subtotal:nth-child(3) td .woocommerce-Price-amount.amount",
-    )
-    if (serviceFeeElement) {
-      serviceFeeElement.innerHTML = `<span class="woocommerce-Price-currencySymbol">$</span>${serviceFee.toFixed(2)}`
-    }
-
-    const totalElement = document.querySelector("#wizard-p-3 .order-total td .woocommerce-Price-amount.amount")
+    // Update total in cart totals
+    const totalElement = document.querySelector(".total-amount")
     if (totalElement) {
-      totalElement.innerHTML = `<span class="woocommerce-Price-currencySymbol">$</span>${total.toFixed(2)}`
+      totalElement.textContent = total.toFixed(2)
     }
   }
 
   // Update individual row total
   function updateRowTotal(input) {
     const row = input.closest("tr")
-    const price = products[Array.from(document.querySelectorAll("#wizard-p-2 #shop_table tbody tr")).indexOf(row)].price
+    const index = Array.from(document.querySelectorAll("#wizard-p-2 #shop_table tbody tr")).indexOf(row)
+    const price = PRODUCTS[index]?.price || 0
     const quantity = Number.parseInt(input.value) || 0
     const total = price * quantity
 
@@ -572,17 +579,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const quantities = Array.from(document.querySelectorAll("#wizard-p-2 .qty")).map(
       (input) => Number.parseInt(input.value) || 0,
     )
+
     if (!quantities.some((qty) => qty > 0)) {
       isValid = false
-      document.querySelectorAll("#wizard-p-2 .qty").forEach((input) => {
-        input.classList.add("is-invalid")
-      })
+      const errorMsg = document.createElement("div")
+      errorMsg.className = "error-message"
+      errorMsg.textContent = VALIDATION_MESSAGES.CART_EMPTY
+      errorMsg.style.color = "red"
+      errorMsg.style.textAlign = "center"
+      errorMsg.style.marginTop = "0px"
+      section.appendChild(errorMsg)
     }
 
     return isValid
   }
-
-  setupQuantityHandlers()
 
   // Initialize shipping options
   document.querySelectorAll("#wizard-p-3 input[name='shipping']").forEach((radio) => {
@@ -591,6 +601,10 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
+  // Initialize the quantity handlers
+  setupQuantityHandlers()
+
+  // Initialize the form
   showStep(currentStep)
   updateCartTotals()
 })
