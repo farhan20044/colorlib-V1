@@ -1,6 +1,6 @@
 .form-row {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 .form-row .form-holder {
   width: 50%;

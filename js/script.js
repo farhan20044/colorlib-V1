@@ -1,11 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
-  let currentStep = 0
+  const API_URL = "https://680835e3942707d722dd9290.mockapi.io/api/formdata/data";
+  const SERVICE_FEE = 5.6;
+  const products = [
+    { name: "Cherry", price: 35 },
+    { name: "Mango", price: 20 }
+  ];
+
+  const StepNames = {
+    BASIC_DETAILS: 0,
+    CHANGE_PASSWORD: 1,
+    CART: 2,
+    BILL: 3
+  };
+
+  const ValidationMessages = {
+    REQUIRED: "This field is required",
+    LETTERS_ONLY: "Only letters allowed",
+    NUMBERS_ONLY: "Only numbers allowed",
+    EMAIL_INVALID: "Please enter a valid email",
+    PASSWORDS_MATCH: "Current passwords must match",
+    NEW_PASSWORDS_MATCH: "New passwords don't match",
+    PASSWORD_DIFFERENT: "New password must be different from current password",
+    CART_EMPTY: "Please add at least one product to your cart"
+  };
+
+  const ButtonText = {
+    CONTINUE: "Continue",
+    CHECKOUT: "Proceed to Checkout",
+    UPLOADING: "Uploading..."
+  };
+
+  let currentStep = StepNames.BASIC_DETAILS;
   const sections = document.querySelectorAll(".content section")
   const steps = document.querySelectorAll(".steps li")
   const nextButton = document.querySelector(".actions a[href='#next']")
   const prevButton = document.querySelector(".actions a[href='#previous']")
   const finishButton = document.querySelector(".actions a[href='#finish']")
-  const actionItems = document.querySelectorAll(".actions li")
   const actionsDiv = document.querySelector(".actions.clearfix")
 
   // Show the current step & hide others
@@ -27,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     prevButton.parentElement.style.visibility = "visible"
 
-    if (step === 0) {
+    if (step === StepNames.BASIC_DETAILS) {
       prevButton.parentElement.classList.add("disabled")
       prevButton.style.opacity = "0.5"
       prevButton.style.cursor = "not-allowed"
@@ -37,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
       prevButton.style.cursor = "pointer"
     }
 
-    if (step === sections.length - 1) {
+    if (step === StepNames.BILL) {
       prevButton.parentElement.style.display = "none"
       nextButton.innerHTML = "Proceed to Checkout"
       actionsDiv.style.display = "flex"
@@ -45,6 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
       actionsDiv.style.justifyContent = "center"
       nextButton.classList.add("finish-btn")
       nextButton.style.width = "234px"
+      // Update cart totals when showing the last step
+      updateCartTotals()
     } else {
       prevButton.parentElement.style.display = "block"
       nextButton.innerHTML = "Continue"
@@ -71,13 +103,18 @@ document.addEventListener("DOMContentLoaded", () => {
     currentSection.querySelectorAll(".error-message").forEach((el) => el.remove())
     inputs.forEach((input) => input.classList.remove("is-invalid"))
 
+    // For cart validation (step 3)
+    if (currentStep === StepNames.CART) {
+      return validateSection3()
+    }
+
     inputs.forEach((input) => {
       if (input.id === "city") {
         if (input.value.trim() && !/^[A-Za-z ]+$/.test(input.value.trim())) {
           input.classList.add("is-invalid")
           const errorMsg = document.createElement("div")
           errorMsg.className = "error-message"
-          errorMsg.textContent = "Only letters allowed"
+          errorMsg.textContent = ValidationMessages.LETTERS_ONLY
           input.parentNode.insertBefore(errorMsg, input.nextSibling)
           isValid = false
         }
@@ -88,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = "This field is required"
+        errorMsg.textContent = ValidationMessages.REQUIRED
         input.parentNode.insertBefore(errorMsg, input.nextSibling)
         isValid = false
       }
@@ -97,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = "Please enter a valid email"
+        errorMsg.textContent = ValidationMessages.EMAIL_INVALID
         input.parentNode.insertBefore(errorMsg, input.nextSibling)
         isValid = false
       }
@@ -111,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = "Only letters allowed"
+        errorMsg.textContent = ValidationMessages.LETTERS_ONLY
         input.parentNode.insertBefore(errorMsg, input.nextSibling)
         isValid = false
       }
@@ -120,31 +157,29 @@ document.addEventListener("DOMContentLoaded", () => {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = "Only numbers allowed"
+        errorMsg.textContent = ValidationMessages.NUMBERS_ONLY
         input.parentNode.insertBefore(errorMsg, input.nextSibling)
         isValid = false
       }
     })
 
-    // (section 2) 
+    // Password validation (step 2)
     if (currentStep === 1) {
       const currentPass = currentSection.querySelector("#current-pass")?.value
-      const enterCurrentPass = currentSection.querySelector("input[placeholder='Enter Current Password']")?.value
+      const enterCurrentPass = currentSection.querySelector("#enter-current-pass")?.value
       const newPass = currentSection.querySelector("#new-pass")?.value
       const confirmPass = currentSection.querySelector("#confirm-pass")?.value
 
       // Check if current password fields match
       if (currentPass && enterCurrentPass && currentPass !== enterCurrentPass) {
         isValid = false
-        currentSection
-          .querySelectorAll("#current-pass, input[placeholder='Enter Current Password']")
-          .forEach((input) => {
-            input.classList.add("is-invalid")
-            const errorMsg = document.createElement("div")
-            errorMsg.className = "error-message"
-            errorMsg.textContent = "Current passwords must match"
-            input.parentNode.insertBefore(errorMsg, input.nextSibling)
-          })
+        currentSection.querySelectorAll("#current-pass, #enter-current-pass").forEach((input) => {
+          input.classList.add("is-invalid")
+          const errorMsg = document.createElement("div")
+          errorMsg.className = "error-message"
+          errorMsg.textContent = ValidationMessages.PASSWORDS_MATCH
+          input.parentNode.insertBefore(errorMsg, input.nextSibling)
+        })
       }
 
       if (newPass && confirmPass && newPass !== confirmPass) {
@@ -153,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
           input.classList.add("is-invalid")
           const errorMsg = document.createElement("div")
           errorMsg.className = "error-message"
-          errorMsg.textContent = "New passwords don't match"
+          errorMsg.textContent = ValidationMessages.NEW_PASSWORDS_MATCH
           input.parentNode.insertBefore(errorMsg, input.nextSibling)
         })
       }
@@ -164,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
         input.classList.add("is-invalid")
         const errorMsg = document.createElement("div")
         errorMsg.className = "error-message"
-        errorMsg.textContent = "New password must be different from current password"
+        errorMsg.textContent = ValidationMessages.PASSWORD_DIFFERENT
         input.parentNode.insertBefore(errorMsg, input.nextSibling)
       }
     }
@@ -177,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return isValid
   }
-
+  //email validation
   function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return re.test(email)
@@ -265,16 +300,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return formData
   }
 
-  // Function to upload form data to the API
+  //Upload form data to the API
   async function uploadFormData() {
     try {
       const formData = collectFormData()
-      nextButton.innerHTML = "Uploading..."
+      nextButton.innerHTML = ButtonText.UPLOADING
       nextButton.disabled = true
 
       console.log("Sending data to API:", JSON.stringify(formData, null, 2))
 
-      const response = await fetch("https://680835e3942707d722dd9290.mockapi.io/api/formdata/data", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -351,145 +386,6 @@ document.addEventListener("DOMContentLoaded", () => {
       nextButton.disabled = false
 
       return false
-    }
-  }
-
-  // Function to test API connection
-  async function testApiConnection() {
-    try {
-      // Create a small test object that matches the expected format
-      const testData = {
-        firstName: "Test",
-        lastName: "User",
-        email: "test@example.com",
-        userid: 99,
-        Country: "Test Country",
-        state: "Test State",
-        city: "Test City",
-        phoneNumber: "1234567890",
-        referenceid: 99,
-        curentPassword: "testpass",
-        password: "newpass",
-        cartItems: [
-          {
-            productName: "Test Product",
-            price: 10,
-            quantity: 1,
-            totalPrice: 10,
-          },
-        ],
-        subtotal: "10.00",
-        total: "15.60",
-        timestamp: new Date().toISOString(),
-      }
-
-      // Show testing message
-      const testingMsg = document.createElement("div")
-      testingMsg.className = "testing-message"
-      testingMsg.textContent = "Testing API connection..."
-      testingMsg.style.color = "blue"
-      testingMsg.style.padding = "10px"
-      testingMsg.style.marginTop = "10px"
-      testingMsg.style.textAlign = "center"
-      testingMsg.style.fontWeight = "bold"
-
-      const currentSection = sections[currentStep]
-      currentSection.appendChild(testingMsg)
-
-      // Try the endpoint
-      const endpoint = "https://680835e3942707d722dd9290.mockapi.io/api/formdata/data"
-
-      console.log("Testing API with data:", JSON.stringify(testData, null, 2))
-
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(testData),
-      })
-
-      // Remove testing message
-      testingMsg.remove()
-
-      if (response.ok) {
-        const responseData = await response.json()
-        console.log("API test successful, response:", responseData)
-
-        // Show success message with the working endpoint
-        const successMsg = document.createElement("div")
-        successMsg.className = "success-message"
-        successMsg.innerHTML = `
-          <p>API connection successful!</p>
-          <p>Working endpoint: ${endpoint}</p>
-          <p>Response ID: ${responseData.id}</p>
-        `
-        successMsg.style.color = "green"
-        successMsg.style.padding = "10px"
-        successMsg.style.marginTop = "10px"
-        successMsg.style.textAlign = "center"
-        successMsg.style.fontWeight = "bold"
-        successMsg.style.backgroundColor = "#e8f5e9"
-        successMsg.style.borderRadius = "4px"
-
-        currentSection.appendChild(successMsg)
-
-        // Remove success message after a delay
-        setTimeout(() => {
-          successMsg.remove()
-        }, 5000)
-      } else {
-        console.error("API test failed:", response.status, response.statusText)
-
-        // Show error message
-        const errorMsg = document.createElement("div")
-        errorMsg.className = "error-message"
-        errorMsg.innerHTML = `
-          <p>API connection failed with status: ${response.status} ${response.statusText}</p>
-          <p>Please check if the API is available and accessible.</p>
-          <p>You may need to check CORS settings or API permissions.</p>
-        `
-        errorMsg.style.color = "red"
-        errorMsg.style.padding = "10px"
-        errorMsg.style.marginTop = "10px"
-        errorMsg.style.textAlign = "center"
-        errorMsg.style.fontWeight = "bold"
-        errorMsg.style.backgroundColor = "#ffebee"
-        errorMsg.style.borderRadius = "4px"
-
-        currentSection.appendChild(errorMsg)
-
-        // Remove error message after a delay
-        setTimeout(() => {
-          errorMsg.remove()
-        }, 5000)
-      }
-    } catch (error) {
-      console.error("Error testing API connection:", error)
-
-      // Show error message
-      const errorMsg = document.createElement("div")
-      errorMsg.className = "error-message"
-      errorMsg.innerHTML = `
-        <p>Error testing API connection:</p>
-        <p>${error.message}</p>
-        <p>This might be a network issue or CORS restriction.</p>
-      `
-      errorMsg.style.color = "red"
-      errorMsg.style.padding = "10px"
-      errorMsg.style.marginTop = "10px"
-      errorMsg.style.textAlign = "center"
-      errorMsg.style.fontWeight = "bold"
-      errorMsg.style.backgroundColor = "#ffebee"
-      errorMsg.style.borderRadius = "4px"
-
-      const currentSection = sections[currentStep]
-      currentSection.appendChild(errorMsg)
-
-      // Remove error message after a delay
-      setTimeout(() => {
-        errorMsg.remove()
-      }, 5000)
     }
   }
 
@@ -584,15 +480,6 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   // CART
-  const products = [
-    { name: "Cherry", price: 35 },
-    { name: "Mango", price: 20 },
-  ]
-
-  const shippingOptions = {
-    free: 0,
-    local: 5,
-  }
 
   function updateCartTotals() {
     let subtotal = 0
@@ -603,7 +490,7 @@ document.addEventListener("DOMContentLoaded", () => {
       subtotal += quantity * products[index].price
     })
 
-    const serviceFee = 5.6
+    const serviceFee = SERVICE_FEE
 
     const total = subtotal + serviceFee
 
@@ -693,25 +580,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return isValid
-  }
-
-  // Wrap the original showStep function
-  const originalShowStep = showStep
-  showStep = (step) => {
-    originalShowStep(step)
-
-    if (step === 3) {
-      updateCartTotals()
-    }
-  }
-
-  // Wrap the original validateCurrentStep function
-  const originalValidateCurrentStep = validateCurrentStep
-  validateCurrentStep = () => {
-    if (currentStep === 2) {
-      return validateSection3()
-    }
-    return originalValidateCurrentStep()
   }
 
   setupQuantityHandlers()

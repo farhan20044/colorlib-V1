@@ -237,6 +237,12 @@ table.cart .total-price span {
   .cart_totals th {
     width: 80%;
   }
+  .actions{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: end;
+  }
 
   table.cart th {
     display: none;
