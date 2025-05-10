@@ -1,0 +1,11 @@
+input,
+textarea,
+select,
+button {
+  font-family: "Lato-Regular";
+  font-size: 14px;
+}
+
+input{
+  border-radius: 2px;
+}

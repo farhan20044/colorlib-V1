@@ -5,7 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>colorlib-wizard</title>
+    <link rel="stylesheet" href="../css/input.css" />
     <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/form.css" />
+    <link rel="stylesheet" href="../css/cart.css" />
+    <!-- Google fonts -->
     <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,25 +17,37 @@
         href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="vendor/date-picker/css/datepicker.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 </head>
 
-<body cz-shortcut-listen="true">
+<body>
     <div class="wrapper">
         <form action="" onsubmit="form1()" id="wizard" role="application" class="wizard clearfix">
             <div class="steps clearfix">
                 <ul role="tablist">
                     <li role="tab" aria-disabled="false" class="first current" aria-selected="true">
-                        <a id="wizard-t-0" href="" aria-controls="wizard-p-0"><span class="current-info audible">current step: </span><span class="number">1.</span>
-                            <img src="../images/step-1-active.png" alt="">
-                            <span class="step-order">Step 01</span></a><img src="../images/step-arrow.png" alt="" class="step-arrow">
+                        <a id="wizard-t-2" href="#" aria-controls="wizard-p-2"><span
+                                class="current-info audible">current
+                                step: </span><span class="number">1.</span>
+                            <img src="../images/step-1-active.png" alt="Step 1">
+                            <span class="step-order">Step 01</span></a><img src="../images/step-arrow.png" alt=""
+                            class="step-arrow">
                     </li>
                     <li role="tab" aria-disabled="false" class="done" aria-selected="false">
                         <a id="wizard-t-1" href="#wizard-h-1" aria-controls="wizard-p-1"><span class="number">2.</span>
-                            <img src="../images/step-2.png" alt=""><span class="step-order">Step 02</span></a><img src="../images/step-arrow.png" alt="" class="step-arrow">
+                            <img src="../images/step-2.png" alt=""><span class="step-order">Step 02</span></a><img
+                            src="../images/step-arrow.png" alt="" class="step-arrow">
                     </li>
                     <li role="tab" aria-disabled="false" class="done" aria-selected="false">
                         <a id="wizard-t-2" href="#wizard-h-2" aria-controls="wizard-p-2"><span class="number">3.</span>
-                            <img src="../images/step-3.png" alt=""><span class="step-order">Step 03</span></a><img src="../images/step-arrow.png" alt="" class="step-arrow">
+                            <img src="../images/step-3.png" alt=""><span class="step-order">Step 03</span></a><img
+                            src="../images/step-arrow.png" alt="" class="step-arrow">
                     </li>
                     <li role="tab" aria-disabled="false" class="last">
                         <a id="wizard-t-3" href="#wizard-h-3" aria-controls="wizard-p-3"><span class="number">4.</span>
@@ -40,94 +56,111 @@
                 </ul>
             </div>
             <div class="content clearfix">
-                <!-- SECTION 1 -->
-                <h4 id="wizard-h-0" tabindex="-1" class="title current"></h4>
-                <section id="wizard-p-0" role="tabpanel" aria-labelledby="wizard-h-0" class="body current" aria-hidden="false" style="display: block;">
-                    <h3>Basic details</h3>
+                <!-- Wisard 0 -->
+                <section id="wizard-p-0" role="tabpanel" aria-labelledby="wizard-h-0" class="body current"
+                    aria-hidden="false" style="display: block;">
+                    <h3 class="lato-bold">Basic details</h3>
                     <div class="form-row">
+
                         <div class="form-holder">
                             <i class="zmdi zmdi-account"></i>
-                            <input type="text" class="form-control" placeholder="First Name" id="fname" data-has-listeners="true">
+                            <input type="text" class="form-control" placeholder="First Name" id="fname"
+                                data-has-listeners="true">
                         </div>
                         <div class="form-holder">
                             <i class="zmdi zmdi-account"></i>
-                            <input type="text" class="form-control" placeholder="Last Name" id="lname" data-has-listeners="true">
+                            <input type="text" class="form-control" placeholder="Last Name" id="lname"
+                                data-has-listeners="true">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-holder">
                             <i class="zmdi zmdi-email"></i>
-                            <input type="text" class="form-control" placeholder="Email ID" id="email" data-has-listeners="true">
+                            <input type="text" class="form-control" placeholder="Email ID" id="email"
+                                data-has-listeners="true">
                         </div>
                         <div class="form-holder">
                             <i class="zmdi zmdi-account-box-o"></i>
-                            <input type="text" class="form-control" placeholder="Your User ID" id="uid" data-has-listeners="true">
+                            <input type="text" class="form-control" placeholder="Your User ID" id="uid"
+                                data-has-listeners="true">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-holder">
                             <i class="zmdi zmdi-map"></i>
-                            <input type="text" class="form-control" placeholder="Country" id="country" data-has-listeners="true">
+                            <input type="text" class="form-control" placeholder="Country" id="country"
+                                data-has-listeners="true">
                         </div>
                         <div class="form-group">
                             <div class="form-holder">
                                 <i class="zmdi zmdi-pin"></i>
-                                <input type="text" class="form-control" placeholder="State" id="state" data-has-listeners="true">
+                                <input type="text" class="form-control" placeholder="State" id="state"
+                                    data-has-listeners="true">
                             </div>
                             <div class="form-holder">
                                 <i class="zmdi zmdi-pin-drop"></i>
-                                <input type="text" class="form-control" placeholder="City" id="city" data-has-listeners="true">
+                                <input type="text" class="form-control" placeholder="City" id="city"
+                                    data-has-listeners="true">
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-holder">
                             <i class="zmdi zmdi-smartphone-android"></i>
-                            <input type="text" class="form-control" placeholder="Phone Number" id="phone" data-has-listeners="true">
+                            <input type="text" class="form-control" placeholder="Phone Number" id="phone"
+                                data-has-listeners="true">
                         </div>
                         <div class="form-holder password">
                             <i class="zmdi zmdi-eye"></i>
-                            <input type="password" class="form-control" placeholder="Reference Coder" id="refcode" data-has-listeners="true">
+                            <input type="password" class="form-control" placeholder="Reference Coder" id="refcode"
+                                data-has-listeners="true">
                         </div>
-                        
+
                     </div>
                 </section>
 
-                <!-- SECTION 2 -->
+                <!-- Wizard 1 -->
                 <h4 id="wizard-h-1" tabindex="-1" class="title"></h4>
-                <section id="wizard-p-1" role="tabpanel" aria-labelledby="wizard-h-1" class="body" aria-hidden="true" style="display: none;">
+                <section id="wizard-p-1" role="tabpanel" aria-labelledby="wizard-h-1" class="body" aria-hidden="true"
+                    style="display: none;">
                     <h3>Password change</h3>
                     <div class="form-row">
                         <div class="form-holder w-100">
-                            <input type="password" class="form-control" placeholder="Current Password" data-has-listeners="true">
+                            <input type="password" class="form-control" placeholder="Current Password" id="current-pass"
+                                data-has-listeners="true">
                             <i class="zmdi zmdi-lock-open"></i>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-holder w-100">
-                            <input type="password" class="form-control" placeholder="Enter the Current Password" data-has-listeners="true">
+                            <input type="password" class="form-control" placeholder="Enter the Current Password"
+                                id="enter-current-pass" data-has-listeners="true">
                             <i class="zmdi zmdi-lock-open"></i>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-holder w-100">
-                            <input type="password" class="form-control" placeholder="New Password" data-has-listeners="true">
+                            <input type="password" class="form-control" placeholder="New Password" id="new-pass"
+                                data-has-listeners="true">
                             <i class="zmdi zmdi-lock-open"></i>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-holder w-100">
-                            <input type="password" class="form-control" placeholder="Confirm New Password" data-has-listeners="true">
+                            <input type="password" class="form-control" placeholder="Confirm New Password"
+                                id="confirm-pass" data-has-listeners="true">
                             <i class="zmdi zmdi-lock-open"></i>
                         </div>
                     </div>
                 </section>
-
-                <!-- SECTION 3 -->
+                <!-- Wizard 2 -->
                 <h4 id="wizard-h-2" tabindex="-1" class="title"></h4>
-                <section id="wizard-p-2" role="tabpanel" aria-labelledby="wizard-h-2" class="body" aria-hidden="true" style="display: none;">
+                <section id="wizard-p-2" role="tabpanel" aria-labelledby="wizard-h-2" class="body" aria-hidden="true"
+                    style="display: none;">
                     <h3 style="margin-bottom: 16px">My Cart</h3>
-                    <table cellspacing="0" class="table-cart shop_table shop_table_responsive cart woocommerce-cart-form__contents table" id="shop_table">
+                    <table cellspacing="0"
+                        class="table-cart shop_table shop_table_responsive cart woocommerce-cart-form__contents table"
+                        id="shop_table">
                         <thead>
                             <tr>
                                 <th>&nbsp;</th>
@@ -141,12 +174,12 @@
                             <tr>
                                 <td class="product-thumb">
                                     <a href="#" class="item-thumb">
-                                        <img src="images/item-1.jpg" alt="">
+                                        <img src="../images/item-1.jpg" alt="">
                                     </a>
                                 </td>
                                 <td class="product-detail" data-title="Product Detail">
                                     <div>
-                                        <a href="#">Cherry</a>
+                                        <a href="#" style="font-weight: bold;">Cherry</a>
                                         <span>$</span>
                                         <span>35</span>
                                     </div>
@@ -154,7 +187,10 @@
                                 <td class="product-quantity" data-title="Quantity">
                                     <div class="quantity">
                                         <span class="plus">+</span>
-                                        <input type="number" id="quantity_5b4f198d958e1" class="input-text qty text" step="1" min="0" max="" name="cart[5934c1ec0cd31e12bd9084d106bc2e32][qty]" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" data-has-listeners="true">
+                                        <input type="number" id="quantity_5b4f198d958e1" class="input-text qty text"
+                                            step="1" min="0" max="" name="cart[5934c1ec0cd31e12bd9084d106bc2e32][qty]"
+                                            value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric"
+                                            data-has-listeners="true">
                                         <span class="minus">-</span>
                                     </div>
                                 </td>
@@ -173,20 +209,23 @@
                             <tr>
                                 <td class="product-thumb">
                                     <a href="#" class="item-thumb">
-                                        <img src="images/item-2.jpg" alt="">
+                                        <img src="../images/item-2.jpg" alt="">
                                     </a>
                                 </td>
                                 <td class="product-detail" data-title="Product Detail">
                                     <div>
-                                        <a href="#">Mango</a>
+                                        <a href="#" style="font-weight: bold;">Mango</a>
                                         <span>$</span>
-                                        <span>2035</span>
+                                        <span>20</span>
                                     </div>
                                 </td>
                                 <td class="product-quantity" data-title="Quantity">
                                     <div class="quantity">
                                         <span class="plus">+</span>
-                                        <input type="number" id="quantity_5b4f198d958e1" class="input-text qty text" step="1" min="0" max="" name="cart[5934c1ec0cd31e12bd9084d106bc2e32][qty]" value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" data-has-listeners="true">
+                                        <input type="number" id="quantity_5b4f198d958e1" class="input-text qty text"
+                                            step="1" min="0" max="" name="cart[5934c1ec0cd31e12bd9084d106bc2e32][qty]"
+                                            value="1" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric"
+                                            data-has-listeners="true">
                                         <span class="minus">-</span>
                                     </div>
                                 </td>
@@ -206,9 +245,10 @@
                     </table>
                 </section>
 
-                <!-- SECTION 4 -->
+                <!-- Wizard 3 -->
                 <h4 id="wizard-h-3" tabindex="-1" class="title"></h4>
-                <section id="wizard-p-3" role="tabpanel" aria-labelledby="wizard-h-3" class="body" aria-hidden="true" style="display: none;">
+                <section id="wizard-p-3" role="tabpanel" aria-labelledby="wizard-h-3" class="body" aria-hidden="true"
+                    style="display: none;">
                     <h3>Cart Totals</h3>
                     <div class="cart_totals">
                         <table cellspacing="0" class="shop_table shop_table_responsive">
@@ -226,13 +266,15 @@
                                     <td data-title="Subtotal">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="radio" name="shipping" checked="" data-has-listeners="true"> Free
+                                                <input type="radio" name="shipping" checked=""
+                                                    data-has-listeners="true"> Free
                                                 Shipping
                                                 <span class="checkmark"></span>
                                             </label>
                                             <label>
-                                                <input type="radio" name="shipping" data-has-listeners="true"> Local pickup:
-                                                <span>$</span><span>0.00</span>
+                                                <input type="radio" name="shipping" data-has-listeners="true"> Local
+                                                pickup:
+                                                <span>$</span><span class="lato-bold" style="font-weight: bold;">0.00</span>
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
@@ -248,9 +290,9 @@
                                     </td>
                                 </tr>
                                 <tr class="order-total border-0">
-                                    <th>Total</th>
+                                    <th >Total</th>
                                     <td data-title="Total">
-                                        <span class="woocommerce-Price-amount amount">
+                                        <span class="woocommerce-Price-amount amount" style="font-weight: bold;">
                                             <span class="woocommerce-Price-currencySymbol">$</span>64.69
                                         </span>
                                     </td>
@@ -261,12 +303,12 @@
                 </section>
             </div>
             <div class="actions clearfix">
-                <ul role="menu" aria-label="Pagination">
+                <ul role="menu" aria-label="Pagination" style="display: contents;">
                     <li class="disabled" aria-disabled="true">
-                        <a href="#previous" role="menuitem">Back</a>
+                        <a href="#previous" class="back-button" role="menuitem">Back</a>
                     </li>
                     <li aria-hidden="false" aria-disabled="false">
-                        <a href="#next" role="menuitem" >Continue</a>
+                        <a href="#next" class="next-button" role="menuitem">Continue</a>
                     </li>
                     <li aria-hidden="true" style="display: none">
                         <a href="#finish" role="menuitem">Proceed to checkout</a>
@@ -276,89 +318,15 @@
         </form>
     </div>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
+
+
+    <!-- Script -->
     <script src="../js/script.js"></script>
-    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
-<style>html, :root, .aiinhbfoop.light, :host([class=light]) {--aiinhbfoop-main-color: 0, 102, 255;}.aiinhbfoop.dark, :host([class=dark]) {--aiinhbfoop-main-color: 0, 102, 255;}</style><!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
 
 
-<style>html, :root, .aiinhbfoop.light, :host([class=light]) {--aiinhbfoop-main-color: 0, 102, 255;}.aiinhbfoop.dark, :host([class=dark]) {--aiinhbfoop-main-color: 0, 102, 255;}</style></body>
+</body>
 
 </html>
